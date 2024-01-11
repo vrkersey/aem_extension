@@ -19,7 +19,9 @@ jobs:
           node-version: '16'
 
       - name: Minify and Obfuscate JS Files
-        run: find . -name "*.js" ! -name "*.json" -exec sh -c 'npx terser {} -o {}.min && npx javascript-obfuscator {}.min --output {}.obfuscated.js' \;
+        run: | 
+          rm -rf .github
+          find . -name "*.js" ! -name "*.json" -exec sh -c 'npx terser {} -o {} && npx javascript-obfuscator {} --output {} ' \;
 
       - name: Create Tag
         id: create_tag

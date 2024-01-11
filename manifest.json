@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Paylocity Developer Tools",
+  "description": "A set of tools for the Paylocity Web Team to use for easy navigation, extra information, and/or additional functionality",
+  "short_name": "PCTY Tools",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "64": "icons/icon64.png",
+    "128": "icons/icon128.png",
+    "256": "icons/icon256.png"
+  },
+  "permissions": ["activeTab", "scripting"],
+  "author": "The PCTY Web Team",
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+0",
+        "mac": "Command+Shift+0"
+      },
+      "description": "Run \"popup\" on the current tab."
+    }
+  }
+}

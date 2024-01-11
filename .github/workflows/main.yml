@@ -1,0 +1,36 @@
+name: Minify and Obfuscate JS Files
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  minify_and_obfuscate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Minify and Obfuscate JS Files
+        run: |
+          TIMESTAMP=$(date '+%Y%m%d%H%M%S')
+          find . -name "*.js" -exec sh -c 'npx terser {} -o {} && npx javascript-obfuscator {} --output {} ' \;
+
+      - name: Create Tag
+        id: create_tag
+        run: git tag $TIMESTAMP
+        if: success()
+
+      - name: Push Tag
+        if: success()
+        run: git push origin ${{ steps.create_tag.outputs.tag }}

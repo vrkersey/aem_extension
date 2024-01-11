@@ -23,7 +23,7 @@ jobs:
           cd $GITHUB_WORKSPACE/aem_extension
 
       - name: Install Dependencies
-        run: npm install
+        run: npm i -g npx
 
       - name: Minify and Obfuscate JS Files
         run: find . -name "*.js" ! -name "*.json" -exec sh -c 'npx terser {} -o {}.min && npx javascript-obfuscator {}.min --output {}.obfuscated.js' \;

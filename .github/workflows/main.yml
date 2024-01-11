@@ -24,7 +24,7 @@ jobs:
       - name: Minify and Obfuscate JS Files
         run: |
           TIMESTAMP=$(date '+%Y%m%d%H%M%S')
-          find . -name "*.js" -exec sh -c 'npx terser {} -o {} && npx javascript-obfuscator {} --output {} ' \;
+          find . -name "*.js" ! -name "*.json" -exec sh -c 'npx terser {} -o {} && npx javascript-obfuscator {} --output {} ' \;
 
       - name: Create Tag
         id: create_tag

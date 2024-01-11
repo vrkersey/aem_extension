@@ -23,7 +23,7 @@ jobs:
 
       - name: Create Tag
         id: create_tag
-        run: git tag $(date '+%Y%m%d%H%M%S')
+        run: git tag v1.0.$(date '+%Y%m%d%H%M%S')
         if: success()
 
       - name: Push Tag

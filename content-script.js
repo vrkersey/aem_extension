@@ -1,11 +1,1 @@
-chrome.runtime.onMessage.addListener((media, sender, sendResponse) => {
-    if (media.event === 'myTest') {
-        const contentPaths = [];
-        const checkedItems = document.querySelectorAll("coral-checkbox._coral-Checkbox[checked]");
-        for (let i = 0; i < checkedItems.length; i++) {
-            const contentPath = checkedItems[i].parentNode.querySelector("link").getAttribute("href");
-            contentPaths.push(contentPath);
-        }
-        sendResponse({msg:document.body.innerHTML});
-    }
-})
+const a0_0x8d0f1d=a0_0x3c02;function a0_0x14ef(){const _0x4b8b4c=['391769SPzHsK','36UCBujK','150205pvsQDX','63gXsRFz','10diiuBd','runtime','6qoyLvm','245764tFjpCP','onMessage','coral-checkbox._coral-Checkbox[checked]','5135713FLZbel','4626PdSNBp','querySelector','58440hSXUlp','querySelectorAll','231795eJlnGN','myTest','length'];a0_0x14ef=function(){return _0x4b8b4c;};return a0_0x14ef();}function a0_0x3c02(_0x330024,_0x599510){const _0x14efc2=a0_0x14ef();return a0_0x3c02=function(_0x3c0279,_0x4b3099){_0x3c0279=_0x3c0279-0x67;let _0x34c9b3=_0x14efc2[_0x3c0279];return _0x34c9b3;},a0_0x3c02(_0x330024,_0x599510);}(function(_0x34f081,_0x46dbea){const _0x571f23=a0_0x3c02,_0x201d95=_0x34f081();while(!![]){try{const _0x4b453c=-parseInt(_0x571f23(0x69))/0x1+parseInt(_0x571f23(0x68))/0x2*(-parseInt(_0x571f23(0x72))/0x3)+-parseInt(_0x571f23(0x6e))/0x4+parseInt(_0x571f23(0x76))/0x5+parseInt(_0x571f23(0x6d))/0x6*(-parseInt(_0x571f23(0x67))/0x7)+-parseInt(_0x571f23(0x74))/0x8*(parseInt(_0x571f23(0x6a))/0x9)+parseInt(_0x571f23(0x6b))/0xa*(parseInt(_0x571f23(0x71))/0xb);if(_0x4b453c===_0x46dbea)break;else _0x201d95['push'](_0x201d95['shift']());}catch(_0x28a9d9){_0x201d95['push'](_0x201d95['shift']());}}}(a0_0x14ef,0x28b52),chrome[a0_0x8d0f1d(0x6c)][a0_0x8d0f1d(0x6f)]['addListener']((_0x22b4c5,_0x2d208e,_0x48b55a)=>{const _0x3d6210=a0_0x8d0f1d;if(_0x22b4c5['event']===_0x3d6210(0x77)){const _0x34c466=[],_0x5c27f2=document[_0x3d6210(0x75)](_0x3d6210(0x70));for(let _0x5adec7=0x0;_0x5adec7<_0x5c27f2[_0x3d6210(0x78)];_0x5adec7++){const _0x5a6e1b=_0x5c27f2[_0x5adec7]['parentNode'][_0x3d6210(0x73)]('link')['getAttribute']('href');_0x34c466['push'](_0x5a6e1b);}_0x48b55a({'msg':document['body']['innerHTML']});}}));

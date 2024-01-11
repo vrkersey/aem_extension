@@ -1,18 +1,1 @@
-(function () {
-    'use strict';
-
-    const id = 'cache-buster';
-
-    const init = () => {
-
-        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-            const tab = tabs[0];
-            const url = new URL(tab.url);
-            const randomNumber = Math.floor(100000 + Math.random() * 900000);
-            url.searchParams.set(id, randomNumber.toString());
-            navigateToUrl(tab.id, url.toString());
-        });
-    };
-
-    document.querySelector(`.tool-button#${id}`).addEventListener('click', init);
-})();
+function a0_0x5df6(){const _0x4de751=['.tool-button#','3691488qpmLJR','cache-buster','3378669lwfiMn','random','252795ScNmYU','toString','3441996wDbbcY','8zNECRJ','floor','addEventListener','query','1358296bKpSmh','3660DUCyhD','tabs','searchParams','200459YTGxQM','click','set','2720LfREMh'];a0_0x5df6=function(){return _0x4de751;};return a0_0x5df6();}function a0_0x25c2(_0x449d91,_0x500abb){const _0x5df604=a0_0x5df6();return a0_0x25c2=function(_0x25c263,_0x25ba8){_0x25c263=_0x25c263-0xd0;let _0x17a1b8=_0x5df604[_0x25c263];return _0x17a1b8;},a0_0x25c2(_0x449d91,_0x500abb);}(function(_0x49ef37,_0xb37e4a){const _0x177704=a0_0x25c2,_0x5e4e49=_0x49ef37();while(!![]){try{const _0x33de5e=-parseInt(_0x177704(0xd5))/0x1*(parseInt(_0x177704(0xd8))/0x2)+parseInt(_0x177704(0xd3))/0x3+-parseInt(_0x177704(0xe3))/0x4*(-parseInt(_0x177704(0xdd))/0x5)+-parseInt(_0x177704(0xd1))/0x6+parseInt(_0x177704(0xe0))/0x7+parseInt(_0x177704(0xdc))/0x8+parseInt(_0x177704(0xd7))/0x9;if(_0x33de5e===_0xb37e4a)break;else _0x5e4e49['push'](_0x5e4e49['shift']());}catch(_0x541798){_0x5e4e49['push'](_0x5e4e49['shift']());}}}(a0_0x5df6,0x8d377),(function(){'use strict';const _0x8f120d=a0_0x25c2;const _0x4fe30e=_0x8f120d(0xd2),_0x10bfcf=()=>{const _0x2ef116=_0x8f120d;chrome[_0x2ef116(0xde)][_0x2ef116(0xdb)]({'active':!![],'currentWindow':!![]},_0x422fb8=>{const _0x48ff8e=_0x2ef116,_0x26bc97=_0x422fb8[0x0],_0x3fd532=new URL(_0x26bc97['url']),_0x5d0533=Math[_0x48ff8e(0xd9)](0x186a0+Math[_0x48ff8e(0xd4)]()*0xdbba0);_0x3fd532[_0x48ff8e(0xdf)][_0x48ff8e(0xe2)](_0x4fe30e,_0x5d0533[_0x48ff8e(0xd6)]()),navigateToUrl(_0x26bc97['id'],_0x3fd532[_0x48ff8e(0xd6)]());});};document['querySelector'](_0x8f120d(0xd0)+_0x4fe30e)[_0x8f120d(0xda)](_0x8f120d(0xe1),_0x10bfcf);}()));

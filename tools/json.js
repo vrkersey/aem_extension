@@ -1,16 +1,1 @@
-(function () {
-    'use strict';
-
-    const id = 'json';
-    const init = () => {
-        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-            const tab = tabs[0];
-            let url = isEditMode(tab.url) ? getPreviewUrl(tab.url) : tab.url;
-            url = url.split("?")[0];
-            url = url.replace(URL_CONSTANTS.authSuffix, ".infinity.json")
-            navigateToUrl(tab.id, url.toString());
-        });
-    };
-
-    document.querySelector(`.tool-button#${id}`).addEventListener('click', init);
-})();
+function a0_0x176a(_0x34a508,_0x3ec4f6){const _0x1d4a85=a0_0x1d4a();return a0_0x176a=function(_0x176a18,_0x43dbdf){_0x176a18=_0x176a18-0x8e;let _0x4c1053=_0x1d4a85[_0x176a18];return _0x4c1053;},a0_0x176a(_0x34a508,_0x3ec4f6);}function a0_0x1d4a(){const _0x1302da=['json','authSuffix','51gjsDfC','querySelector','click','5650270HYoxyi','29802EFgqBn','.infinity.json','705291aeaRur','toString','3354072lgeJSI','113771wDyPQs','3468080VVpKWt','url','354XYuElZ','replace','.tool-button#','addEventListener','2352012qYWcte','9XHipyH'];a0_0x1d4a=function(){return _0x1302da;};return a0_0x1d4a();}(function(_0x2847d9,_0x22d9ce){const _0x21621f=a0_0x176a,_0x3f9c33=_0x2847d9();while(!![]){try{const _0x272160=-parseInt(_0x21621f(0xa1))/0x1*(parseInt(_0x21621f(0x91))/0x2)+-parseInt(_0x21621f(0x93))/0x3+-parseInt(_0x21621f(0x9d))/0x4+parseInt(_0x21621f(0x90))/0x5+parseInt(_0x21621f(0x99))/0x6*(parseInt(_0x21621f(0x96))/0x7)+parseInt(_0x21621f(0x95))/0x8*(parseInt(_0x21621f(0x9e))/0x9)+-parseInt(_0x21621f(0x97))/0xa;if(_0x272160===_0x22d9ce)break;else _0x3f9c33['push'](_0x3f9c33['shift']());}catch(_0x3b7aae){_0x3f9c33['push'](_0x3f9c33['shift']());}}}(a0_0x1d4a,0x8d34d),(function(){'use strict';const _0x2c2bd7=a0_0x176a;const _0x5f5d10=_0x2c2bd7(0x9f),_0x3f5a63=()=>{chrome['tabs']['query']({'active':!![],'currentWindow':!![]},_0x3e11e5=>{const _0x1d8379=a0_0x176a,_0x36fcda=_0x3e11e5[0x0];let _0x2183f7=isEditMode(_0x36fcda[_0x1d8379(0x98)])?getPreviewUrl(_0x36fcda[_0x1d8379(0x98)]):_0x36fcda[_0x1d8379(0x98)];_0x2183f7=_0x2183f7['split']('?')[0x0],_0x2183f7=_0x2183f7[_0x1d8379(0x9a)](URL_CONSTANTS[_0x1d8379(0xa0)],_0x1d8379(0x92)),navigateToUrl(_0x36fcda['id'],_0x2183f7[_0x1d8379(0x94)]());});};document[_0x2c2bd7(0x8e)](_0x2c2bd7(0x9b)+_0x5f5d10)[_0x2c2bd7(0x9c)](_0x2c2bd7(0x8f),_0x3f5a63);}()));

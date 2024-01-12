@@ -31,6 +31,10 @@ div.container > div.right {
 }
 
 .tool-button {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    line-height: 2rem;
     width: 100%;
     cursor: pointer;
     height: 35px;
@@ -40,6 +44,14 @@ div.container > div.right {
     color: white;
     font-weight: 800;
     border: 2px solid #343e48;
+}
+
+a.tool-button {
+    height: 31px;
+}
+
+a.tool-button[href='#'] {
+    display: none;
 }
 
 .tool-button:hover:not([disabled]) {

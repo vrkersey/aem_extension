@@ -1,44 +1,71 @@
-
 const jsTools = ["cache-buster.js", "go-to.js", "json.js", "publish.js", "wcmmode.js", "toggle-client.js"];
 
-const ADOBE_ENVIRONMENTS = {
-    cloud_manager: "https://experience.adobe.com/#/@paylocity/cloud-manager/landing.html",
-    admin_console: "https://adminconsole.adobe.com/1C931ED964795FF80A495EF3@AdobeOrg/overview"
+const ADOBE_ENVIRONMENT_DOMAINS = {
+    experience: "https://experience.adobe.com/#/",
+    admin_console: "https://adminconsole.adobe.com"
 }
 
-const LOCAL_DOMAINS = {
-    uiEnabled: false,
-    author: "http://localhost:4502",
-    publish: "http://localhost:4503",
-    preview: "http://localhost:4503",
-    cdn: "http://localhost:4503"
+class Domain {
+    constructor(programId, environmentId, authorHref, publishHref, previewHref) {
+        this.programId = programId;
+        this.environmentId = environmentId;
+        this.authorHref = authorHref;
+        this.publishHref = publishHref;
+        this.previewHref = previewHref;
+    }
+
+    get defaultAuthorUrl() {
+        return `https://author-p${this.programId}-e${this.environmentId}.adobeaemcloud.com`
+    }
+
+    get authorUrl() {
+        return this.authorHref ? this.authorHref : this.defaultAuthorUrl;
+    }
+
+    get defaultPublishUrl() {
+        return `https://publish-p${this.programId}-e${this.environmentId}.adobeaemcloud.com`;
+    }
+
+    get publishUrl() {
+        return this.publishHref ? this.publishHref : this.defaultPublishUrl;
+    }
+
+    get defaultPreviewUrl() {
+        return `https://preview-p${this.programId}-e${this.environmentId}.adobeaemcloud.com`;
+    }
+
+    get previewUrl() {
+        return this.previewHref ? this.previewHref : this.defaultPreviewUrl;
+    }
+
+    isPublish(url) {
+        return !!url.match(this.defaultPublishUrl) || !!url.match(this.publishUrl) || !!url.match(this.defaultPreviewUrl) || !!url.match(this.previewUrl);
+    }
+
+    isAuthor(url) {
+        return !!url.match(this.defaultAuthorUrl) || url.match(this.authorUrl);
+    }
+
+    isDomain(url) {
+        return this.isAuthor(url) || this.isPublish(url);
+    }
+
+    static getUnknownDomain(url) {
+        const regex = /https:\/\/(?:author|publish|preview)-p(\d+)-e(\d+)\.adobeaemcloud\.com/;
+        const matchResults = url.match(regex);
+        if (matchResults) {
+            const programId = matchResults[1];
+            const environmentId = matchResults[2];
+            return new Domain(programId, environmentId);
+        }
+    }
+
+    static getLocalDomain() {
+        return new Domain(null, null, "http://localhost:4502", "http://localhost:4503", null);
+    }
 }
 
-const DEV_DOMAINS = {
-    uiEnabled: true,
-    author: "https://author-p116368-e1156319.adobeaemcloud.com",
-    publish: "https://publish-p116368-e1156319.adobeaemcloud.com",
-    preview: "https://preview-p116368-e1156319.adobeaemcloud.com",
-    cdn: "https://dev-www.paylocity.com"
-}
-
-const STAGE_DOMAINS = {
-    uiEnabled: true,
-    author: "https://author-p116368-e1156414.adobeaemcloud.com",
-    publish: "https://publish-p116368-e1156414.adobeaemcloud.com",
-    preview: "https://preview-p116368-e1156414.adobeaemcloud.com",
-    cdn: "https://stage-www.paylocity.com"
-}
-
-const PROD_DOMAINS = {
-    uiEnabled: false,
-    author: "https://author-p116368-e1156320.adobeaemcloud.com",
-    publish: "https://publish-p116368-e1156320.adobeaemcloud.com",
-    preview: "https://uat-www.paylocity.com",
-    cdn: "https://www.paylocity.com"
-}
-
-const DOMAINS = [LOCAL_DOMAINS, DEV_DOMAINS, STAGE_DOMAINS, PROD_DOMAINS];
+const DOMAINS = [];
 
 const URL_CONSTANTS = {
     uiPrefix: "/ui#/aem",
@@ -47,7 +74,9 @@ const URL_CONSTANTS = {
     authSuffix: ".html",
     uiSuffix: "?appId=aemshell",
     wcmmode: "wcmmode",
-    assetDetail: "/assetdetails.html"
+    assetDetail: "/assetdetails.html",
+    cloudManager: "/cloud-manager/landing.html",
+    target: "/target/activities/activityLibrary"
 }
 
 const AEM_ADMIN_CONSOLES = {
@@ -61,15 +90,17 @@ function isAemUrl(url) {
 }
 
 function isAuthor(url) {
-    return !!DOMAINS.find(domain => url.startsWith(domain.author));
+    const domain = findCurrentDomain(url);
+    return domain.isAuthor(url);
 }
 
 function isPublish(url) {
-    return !!DOMAINS.find(domain => url.startsWith(domain.publish) || url.startsWith(domain.preview) || url.startsWith(domain.cdn));
+    const domain = findCurrentDomain(url);
+    return domain.isPublish(url);
 }
 
 function findCurrentDomain(url) {
-    return DOMAINS.find(domain => url.startsWith(domain.author) || url.startsWith(domain.publish) || url.startsWith(domain.preview) || url.startsWith(domain.cdn));
+    return DOMAINS.find(domain => domain.isDomain(url)) || Domain.getUnknownDomain(url);
 }
 
 function getContentPath(url) {
@@ -93,7 +124,7 @@ function getPublishUrl(url) {
     const domain = findCurrentDomain(url);
     let contentPath = getContentPath(url);
     contentPath = contentPath.replace(URL_CONSTANTS.contentPath, "").replace(URL_CONSTANTS.authSuffix, "");
-    let origin = domain.cdn;
+    let origin = domain.publishUrl;
     return domain ? origin + contentPath : "";
 }
 
@@ -101,13 +132,13 @@ function getAuthorUrl(url) {
     const domain = findCurrentDomain(url);
     let contentPath = getContentPath(url);
     contentPath = URL_CONSTANTS.authPrefix + contentPath + URL_CONSTANTS.authSuffix;
-    return domain ? domain.author + contentPath : "";
+    return domain ? domain.authorUrl + contentPath : "";
 }
 
 function getPreviewUrl(url) {
     const domain = findCurrentDomain(url);
     const contentPath = getContentPath(url);
-    return domain.author + contentPath + `${URL_CONSTANTS.authSuffix}?${URL_CONSTANTS.wcmmode}=disabled`;
+    return domain.authorUrl + contentPath + `${URL_CONSTANTS.authSuffix}?${URL_CONSTANTS.wcmmode}=disabled`;
 }
 
 function isEditMode(url) {
@@ -123,8 +154,6 @@ function navigateToUrlNewTab(url) {
     chrome.tabs.create({url: url});
     window.close();
 }
-
-
 
 function navigateToUrl(tabId, url) {
     function documentGoToUrl(url) {
@@ -145,8 +174,24 @@ function resetUI() {
         author: "-author",
         publish: "-publish",
         aem: "-aem",
-        page: "-page"
+        page: "-page",
+        admin: "-mode-admin",
+        developer: "-mode-developer"
     }
+    chrome.storage.sync.get(["mode_admin", "mode_developer"]).then((result) => {
+        const isAdminMode = result.mode_admin === "on";
+        const isDeveloperMode = result.mode_developer === "on";
+
+        const buttons = document.querySelectorAll(BUTTON_SELECTOR);
+        buttons.forEach((button) => {
+            if (button.classList.contains(CLASSES.admin) && !isAdminMode) {
+                button.remove();
+            }
+            if (button.classList.contains(CLASSES.developer) && !isDeveloperMode) {
+                button.remove();
+            }
+        });
+    });
 
     chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
         const tab = tabs[0];
@@ -156,8 +201,6 @@ function resetUI() {
         const page = aemInstance && (isPreviewMode(tab.url) || isEditMode(tab.url) || isPublish(tab.url))
         const buttons = document.querySelectorAll(BUTTON_SELECTOR);
         buttons.forEach((button) => {
-            button.disabled = false;
-
             if (button.classList.contains(CLASSES.aem) && !aemInstance) {
                 button.disabled = true;
             }
@@ -174,14 +217,51 @@ function resetUI() {
     });
 }
 
+
 (function () {
+
+    function setupDomains() {
+        const environmentFormPrefix = ["dev", "stage", "prod"];
+        //add local
+        DOMAINS.push(Domain.getLocalDomain());
+
+        chrome.storage.sync.get().then((result) => {
+            const programName = result['program_name'];
+            const adminMode = result['mode_admin'];
+            if (programName && adminMode) {
+                document.getElementById(`go-to-cloud-manager`).href = ADOBE_ENVIRONMENT_DOMAINS.experience + programName + URL_CONSTANTS.cloudManager;
+                document.getElementById(`go-to-target`).href = ADOBE_ENVIRONMENT_DOMAINS.experience + programName + URL_CONSTANTS.target;
+            }
+            if (adminMode) {
+                document.getElementById(`go-to-admin-console`).href = ADOBE_ENVIRONMENT_DOMAINS.admin_console;
+            }
+            const programId = result['program_id'];
+            if (programId) {
+                environmentFormPrefix.forEach(prefix => {
+                    const id = result[`${prefix}_env_id`];
+                    const url = result[`${prefix}_env_url`];
+                    if (id) {
+                        const domain = new Domain(programId, id, null, url, null)
+                        DOMAINS.push(domain);
+                        document.getElementById(`go-to-${prefix}`).href = domain.authorUrl;
+                    }
+                });
+            }
+        });
+    }
+
     jsTools.forEach(tool => {
         let script = document.createElement("script");
         script.src = `tools/${tool}`;
         document.head.appendChild(script);
     });
 
-    document.readyState !== `interactive` ? resetUI() : document.addEventListener(`readystatechange`, () => {
-        document.readyState === `complete` && resetUI()
+    function init() {
+        setupDomains();
+        resetUI();
+    }
+
+    document.readyState !== `interactive` ? init() : document.addEventListener(`readystatechange`, () => {
+        document.readyState === `complete` && init()
     });
 })();

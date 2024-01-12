@@ -4,6 +4,11 @@
   "description": "A set of tools for the Paylocity Web Team to use for easy navigation, extra information, and/or additional functionality",
   "short_name": "PCTY Tools",
   "version": "1.0",
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -19,7 +24,7 @@
     "128": "icons/icon128.png",
     "256": "icons/icon256.png"
   },
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "storage"],
   "author": "The PCTY Web Team",
   "commands": {
     "_execute_action": {

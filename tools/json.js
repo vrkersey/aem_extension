@@ -1,16 +1,1 @@
-(function () {
-    'use strict';
-
-    const id = 'json';
-    const init = () => {
-        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-            const tab = tabs[0];
-            let url = isEditMode(tab.url) ? getPreviewUrl(tab.url) : tab.url;
-            url = url.split("?")[0];
-            url = url.replace(URL_CONSTANTS.authSuffix, ".infinity.json")
-            navigateToUrl(tab.id, url.toString());
-        });
-    };
-
-    document.querySelector(`.tool-button#${id}`).addEventListener('click', init);
-})();
+(function(_0x1b19ab,_0x4d03d3){const _0x4e3d97=a0_0x5d9e,_0x54d749=_0x1b19ab();while(!![]){try{const _0xb91941=-parseInt(_0x4e3d97(0x165))/0x1+parseInt(_0x4e3d97(0x168))/0x2*(parseInt(_0x4e3d97(0x16d))/0x3)+-parseInt(_0x4e3d97(0x16b))/0x4+parseInt(_0x4e3d97(0x167))/0x5+-parseInt(_0x4e3d97(0x171))/0x6*(parseInt(_0x4e3d97(0x169))/0x7)+-parseInt(_0x4e3d97(0x178))/0x8*(parseInt(_0x4e3d97(0x170))/0x9)+parseInt(_0x4e3d97(0x16f))/0xa;if(_0xb91941===_0x4d03d3)break;else _0x54d749['push'](_0x54d749['shift']());}catch(_0x4bcfd0){_0x54d749['push'](_0x54d749['shift']());}}}(a0_0x44f8,0xe50cb),(function(){'use strict';const _0x1f95d4=a0_0x5d9e;const _0x345a01=_0x1f95d4(0x174),_0x503e70=()=>{const _0x2105be=_0x1f95d4;chrome['tabs'][_0x2105be(0x164)]({'active':!![],'currentWindow':!![]},_0x294d0e=>{const _0x1e7e78=_0x2105be,_0x12bc8a=_0x294d0e[0x0];let _0x9cc3fd=isEditMode(_0x12bc8a[_0x1e7e78(0x16e)])?getPreviewUrl(_0x12bc8a[_0x1e7e78(0x16e)]):_0x12bc8a[_0x1e7e78(0x16e)];_0x9cc3fd=_0x9cc3fd[_0x1e7e78(0x177)]('?')[0x0],_0x9cc3fd=_0x9cc3fd[_0x1e7e78(0x176)](URL_CONSTANTS['authSuffix'],_0x1e7e78(0x166)),navigateToUrl(_0x12bc8a['id'],_0x9cc3fd[_0x1e7e78(0x16a)]());});};document[_0x1f95d4(0x16c)](_0x1f95d4(0x175)+_0x345a01)[_0x1f95d4(0x173)](_0x1f95d4(0x172),_0x503e70);}()));function a0_0x5d9e(_0x35fbfc,_0x5f1e67){const _0x44f87e=a0_0x44f8();return a0_0x5d9e=function(_0x5d9e7b,_0x2c6de8){_0x5d9e7b=_0x5d9e7b-0x164;let _0xa3576e=_0x44f87e[_0x5d9e7b];return _0xa3576e;},a0_0x5d9e(_0x35fbfc,_0x5f1e67);}function a0_0x44f8(){const _0x16c22a=['84248SseLOy','query','778405UBHRnG','.infinity.json','9221890rlYryM','338zZAWUs','469smbKoo','toString','4200880YYGNmo','querySelector','30603uEwwzU','url','3526910LDTiwy','63vIimcC','96762GCzhzx','click','addEventListener','json','.tool-button#','replace','split'];a0_0x44f8=function(){return _0x16c22a;};return a0_0x44f8();}

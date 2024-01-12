@@ -1,11 +1,1 @@
-chrome.runtime.onMessage.addListener((media, sender, sendResponse) => {
-    if (media.event === 'myTest') {
-        const contentPaths = [];
-        const checkedItems = document.querySelectorAll("coral-checkbox._coral-Checkbox[checked]");
-        for (let i = 0; i < checkedItems.length; i++) {
-            const contentPath = checkedItems[i].parentNode.querySelector("link").getAttribute("href");
-            contentPaths.push(contentPath);
-        }
-        sendResponse({msg:document.body.innerHTML});
-    }
-})
+const a0_0x3a345d=a0_0x51a0;function a0_0x1dc9(){const _0xc70001=['4whuDNx','runtime','onMessage','1924580kMajRm','link','coral-checkbox._coral-Checkbox[checked]','130878yPSxZi','672678ZvIkKk','length','innerHTML','querySelector','770280jXLpHH','9724712KdlymI','href','982955DtbkHW','getAttribute','querySelectorAll','body','856137daCdYC','parentNode'];a0_0x1dc9=function(){return _0xc70001;};return a0_0x1dc9();}function a0_0x51a0(_0xbc9af4,_0xe7d59a){const _0x1dc908=a0_0x1dc9();return a0_0x51a0=function(_0x51a05f,_0x5bac8f){_0x51a05f=_0x51a05f-0xff;let _0x420575=_0x1dc908[_0x51a05f];return _0x420575;},a0_0x51a0(_0xbc9af4,_0xe7d59a);}(function(_0x1d22f9,_0x1c4402){const _0x4d1ad6=a0_0x51a0,_0x3a8e05=_0x1d22f9();while(!![]){try{const _0x9a38c1=-parseInt(_0x4d1ad6(0x108))/0x1+-parseInt(_0x4d1ad6(0x109))/0x2+-parseInt(_0x4d1ad6(0x100))/0x3+-parseInt(_0x4d1ad6(0x102))/0x4*(-parseInt(_0x4d1ad6(0x110))/0x5)+-parseInt(_0x4d1ad6(0x10d))/0x6+-parseInt(_0x4d1ad6(0x105))/0x7+parseInt(_0x4d1ad6(0x10e))/0x8;if(_0x9a38c1===_0x1c4402)break;else _0x3a8e05['push'](_0x3a8e05['shift']());}catch(_0x1923f6){_0x3a8e05['push'](_0x3a8e05['shift']());}}}(a0_0x1dc9,0x3e908),chrome[a0_0x3a345d(0x103)][a0_0x3a345d(0x104)]['addListener']((_0x541006,_0x422612,_0x575a3e)=>{const _0x558660=a0_0x3a345d;if(_0x541006['event']==='myTest'){const _0x5c5ad1=[],_0xc3f6fc=document[_0x558660(0x112)](_0x558660(0x107));for(let _0x3954b7=0x0;_0x3954b7<_0xc3f6fc[_0x558660(0x10a)];_0x3954b7++){const _0x4452b6=_0xc3f6fc[_0x3954b7][_0x558660(0x101)][_0x558660(0x10c)](_0x558660(0x106))[_0x558660(0x111)](_0x558660(0x10f));_0x5c5ad1['push'](_0x4452b6);}_0x575a3e({'msg':document[_0x558660(0xff)][_0x558660(0x10b)]});}}));

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AEM Extension Options</title>
+</head>
+<body>
+<form id="options">
+    <fieldset>
+        <legend>Adobe Experience Cloud Program</legend>
+        <div>
+            <label>
+                Program ID
+                <input type="number" name="program_id">
+            </label>
+        </div>
+        <div>
+            <label>
+                Program Name
+                <input type="text" name="program_name">
+            </label>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Develop Environment Configurations</legend>
+        <div>
+            <label>
+                Environment ID
+                <input type="number" name="dev_env_id">
+            </label>
+        </div>
+        <div>
+            <label>
+                Domain URL
+                <input type="text" name="dev_env_url">
+            </label>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Stage Environment Configurations</legend>
+        <div>
+            <label>
+                Environment ID
+                <input type="number" name="stage_env_id">
+            </label>
+        </div>
+        <div>
+            <label>
+                Domain URL
+                <input type="text" name="stage_env_url">
+            </label>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Production Environment Configurations</legend>
+        <div>
+            <label>
+                Environment ID
+                <input type="number" name="prod_env_id">
+            </label>
+        </div>
+        <div>
+            <label>
+                Domain URL
+                <input type="text" name="prod_env_url">
+            </label>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Modes</legend>
+        <label>
+            Admin
+            <input type="checkbox" name="mode_admin">
+        </label>
+        <label>
+            Developer
+            <input type="checkbox" name="mode_developer">
+        </label>
+    </fieldset>
+    <input type="submit" value="Submit">
+</form>
+
+<script src="options.js"></script>
+</body>
+</html>

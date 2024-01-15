@@ -6,7 +6,7 @@
     const wizardPath = "/mnt/override/libs/wcm/core/content/common/managepublicationwizard.html";
 
     function getManagePublicationUrl(currentDomain, publishItemPaths) {
-        const url = currentDomain.author;
+        const url = currentDomain.authorUrl;
         const urlObj = new URL(url);
         urlObj.pathname = wizardPath;
         if (publishItemPaths) {

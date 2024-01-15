@@ -3,7 +3,7 @@
   "name": "Paylocity Developer Tools",
   "description": "A set of tools for the Paylocity Web Team to use for easy navigation, extra information, and/or additional functionality",
   "short_name": "PCTY Tools",
-  "version": "1.0",
+  "version": "1.1",
   "options_page": "options.html",
   "options_ui": {
     "page": "options.html",

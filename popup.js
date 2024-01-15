@@ -240,8 +240,9 @@ function resetUI() {
                 environmentFormPrefix.forEach(prefix => {
                     const id = result[`${prefix}_env_id`];
                     const url = result[`${prefix}_env_url`];
+                    const uatUrl = result[`${prefix}_prev_url`];
                     if (id) {
-                        const domain = new Domain(programId, id, null, url, null)
+                        const domain = new Domain(programId, id, null, url, uatUrl)
                         DOMAINS.push(domain);
                         document.getElementById(`go-to-${prefix}`).href = domain.authorUrl;
                     }

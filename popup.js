@@ -226,18 +226,27 @@ function resetUI() {
         const publishInstance = aemInstance && isPublish(tab.url);
         const page = aemInstance && (isPreviewMode(tab.url) || isEditMode(tab.url) || isPublish(tab.url));
         const buttons = document.querySelectorAll(BUTTON_SELECTOR);
+
+        function disableButton(button) {
+            button.disabled = true;
+            const newTabButton = button.parentElement.querySelector('.new-tab-button');
+            if (newTabButton) {
+                newTabButton.disabled = true;
+            }
+        }
+
         buttons.forEach((button) => {
             if (button.classList.contains(CLASSES.aem) && !aemInstance) {
-                button.disabled = true;
+                disableButton(button);
             }
             if (button.classList.contains(CLASSES.author) && !authorInstance) {
-                button.disabled = true;
+                disableButton(button);
             }
             if (button.classList.contains(CLASSES.publish) && !publishInstance) {
-                button.disabled = true;
+                disableButton(button);
             }
             if (button.classList.contains(CLASSES.page) && !page) {
-                button.disabled = true;
+                disableButton(button);
             }
         });
     });

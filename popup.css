@@ -85,12 +85,14 @@ a.tool-button[href='#'] {
     background-color: unset;
     color: #909090;
     border-color: #909090;
+    cursor: unset;
 }
 
 .tool-button:disabled + .new-tab-button{
     background-color: unset;
     background-image: unset;
     border-color: #909090;
+    cursor: unset;
 }
 .tool-button:disabled + .new-tab-button svg{
     fill: #909090;

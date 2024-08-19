@@ -5,6 +5,15 @@
     <link rel="stylesheet" href="popup.css" type="text/css">
 </head>
 <body>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     style="position: absolute; width: 0; height: 0" aria-hidden="true">
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xml:space="preserve" id="newTabSvg">
+        <path class="st0" d="M96,0v416h416V0H96z M472,376H136V40h336V376z"/>
+        <polygon class="st0" points="40,472 40,296 40,136 40,96 0,96 0,512 416,512 416,472 376,472 	"/>
+        <polygon class="st0" points="232.812,312.829 350.671,194.969 350.671,279.766 390.671,279.766 390.671,126.688 237.594,126.688
+                237.594,166.688 322.39,166.688 204.531,284.547 	"/>
+    </symbol>
+</svg>
 <div class="container header-container">
     <img src="icons/icon32.png">
     <h2>Paylocity Web Team Tools</h2>
@@ -12,12 +21,54 @@
 <div class="container">
     <div class="left">
         <h3 class="section-title">AEM Page Tools</h3>
-        <button class="tool-button -author -aem -page" id="wcmmode">Toggle preview mode</button>
-        <button class="tool-button -publish -aem -page" id="go-to-author">Go to Author</button>
-        <button class="tool-button -author -aem -page" id="go-to-publish">Go to Publish</button>
-        <button class="tool-button -aem" id="go-to-dam">Go to DAM</button>
-        <button class="tool-button -publish -aem -page" id="cache-buster">Cache Buster</button>
-        <button class="tool-button -author -aem -page -mode-developer" id="json">JSON view</button>
+        <div class="button-container">
+            <button class="tool-button -author -aem -page" id="wcmmode">Toggle preview mode</button>
+            <button class="new-tab-button">
+                <svg>
+                    <use xlink:href="#newTabSvg"></use>
+                </svg>
+            </button>
+        </div>
+        <div class="button-container">
+            <button class="tool-button -publish -aem -page" id="go-to-author">Go to Author</button>
+            <button class="new-tab-button">
+                <svg>
+                    <use xlink:href="#newTabSvg"></use>
+                </svg>
+            </button>
+        </div>
+        <div class="button-container">
+            <button class="tool-button -author -aem -page" id="go-to-publish">Go to Publish</button>
+            <button class="new-tab-button">
+                <svg>
+                    <use xlink:href="#newTabSvg"></use>
+                </svg>
+            </button>
+        </div>
+        <div class="button-container">
+            <button class="tool-button -aem" id="go-to-dam">Go to DAM</button>
+            <button class="new-tab-button">
+                <svg>
+                    <use xlink:href="#newTabSvg"></use>
+                </svg>
+            </button>
+        </div>
+        <div class="button-container">
+            <button class="tool-button -publish -aem -page" id="cache-buster">Cache Buster</button>
+            <button class="new-tab-button">
+                <svg>
+                    <use xlink:href="#newTabSvg"></use>
+                </svg>
+            </button>
+        </div>
+        <div class="button-container">
+            <button class="tool-button -author -aem -page -mode-developer" id="json">JSON view</button>
+            <button class="new-tab-button">
+                <svg>
+                    <use xlink:href="#newTabSvg"></use>
+                </svg>
+            </button>
+        </div>
     </div>
     <div class="middle">
         <h3 class="section-title">Advanced Tools</h3>
@@ -26,12 +77,54 @@
     </div>
     <div class="right">
         <h3 class="section-title">Quick Links</h3>
-        <a class="tool-button" id="go-to-prod" href="#">Production Author</a>
-        <a class="tool-button" id="go-to-stage" href="#">Stage Author</a>
-        <a class="tool-button" id="go-to-dev" href="#">Develop Author</a>
-        <a class="tool-button" id="go-to-cloud-manager" href="#">Cloud Manager</a>
-        <a class="tool-button" id="go-to-target" href="#">Target</a>
-        <a class="tool-button" id="go-to-admin-console" href="#">Admin Console</a>
+        <div class="button-container">
+            <button class="tool-button" id="go-to-prod" data-href="#">Production Author</button>
+            <button class="new-tab-button">
+                <svg>
+                    <use xlink:href="#newTabSvg"></use>
+                </svg>
+            </button>
+        </div>
+        <div class="button-container">
+            <button class="tool-button" id="go-to-stage" data-href="#">Stage Author</button>
+            <button class="new-tab-button">
+                <svg>
+                    <use xlink:href="#newTabSvg"></use>
+                </svg>
+            </button>
+        </div>
+        <div class="button-container">
+            <button class="tool-button" id="go-to-dev" data-href="#">Develop Author</button>
+            <button class="new-tab-button">
+                <svg>
+                    <use xlink:href="#newTabSvg"></use>
+                </svg>
+            </button>
+        </div>
+        <div class="button-container">
+            <button class="tool-button" id="go-to-cloud-manager" data-href="#">Cloud Manager</button>
+            <button class="new-tab-button">
+                <svg>
+                    <use xlink:href="#newTabSvg"></use>
+                </svg>
+            </button>
+        </div>
+        <div class="button-container">
+            <button class="tool-button" id="go-to-target" data-href="#">Target</button>
+            <button class="new-tab-button">
+                <svg>
+                    <use xlink:href="#newTabSvg"></use>
+                </svg>
+            </button>
+        </div>
+        <div class="button-container">
+            <button class="tool-button" id="go-to-admin-console" data-href="#">Admin Console</button>
+            <button class="new-tab-button">
+                <svg>
+                    <use xlink:href="#newTabSvg"></use>
+                </svg>
+            </button>
+        </div>
     </div>
 </div>
 <script src="popup.js"></script>

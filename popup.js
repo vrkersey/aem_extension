@@ -3,7 +3,7 @@ const jsTools = ["cache-buster.js", "go-to.js", "json.js", "publish.js", "wcmmod
 const ADOBE_ENVIRONMENT_DOMAINS = {
     experience: "https://experience.adobe.com/#/",
     admin_console: "https://adminconsole.adobe.com"
-}
+};
 
 class Domain {
     constructor(programId, environmentId, authorHref, publishHref, previewHref) {
@@ -15,7 +15,7 @@ class Domain {
     }
 
     get defaultAuthorUrl() {
-        return `https://author-p${this.programId}-e${this.environmentId}.adobeaemcloud.com`
+        return `https://author-p${this.programId}-e${this.environmentId}.adobeaemcloud.com`;
     }
 
     get authorUrl() {
@@ -77,13 +77,13 @@ const URL_CONSTANTS = {
     assetDetail: "/assetdetails.html",
     cloudManager: "/cloud-manager/landing.html",
     target: "/target/activities/activityLibrary"
-}
+};
 
 const AEM_ADMIN_CONSOLES = {
     sites: "/sites.html",
     assets: "/assets.html",
     xfs: "/aem/experience-fragments.html"
-}
+};
 
 function isAemUrl(url) {
     return !!findCurrentDomain(url);
@@ -105,7 +105,7 @@ function findCurrentDomain(url) {
 
 function getContentPath(url) {
     const urlObj = new URL(url);
-    let path = urlObj.pathname
+    let path = urlObj.pathname;
     if (isAuthor(url)) {
         path = path + urlObj.hash;
         path = path.replace(URL_CONSTANTS.uiPrefix, "");
@@ -115,7 +115,8 @@ function getContentPath(url) {
         path = path.replace(URL_CONSTANTS.authSuffix, "");
     } else if (isPublish(url)) {
         path = path.replace(/\/$/, "");
-        path = URL_CONSTANTS.contentPath + path;
+        const contentPath = path.startsWith("/content") ? "" : URL_CONSTANTS.contentPath;
+        path = contentPath + path;
     }
     return path;
 }
@@ -123,7 +124,7 @@ function getContentPath(url) {
 function getPublishUrl(url) {
     const domain = findCurrentDomain(url);
     let contentPath = getContentPath(url);
-    contentPath = contentPath.replace(URL_CONSTANTS.contentPath, "").replace(URL_CONSTANTS.authSuffix, "");
+    contentPath = contentPath.replace(URL_CONSTANTS.contentPath, "").replace(URL_CONSTANTS.authSuffix, "").replace(URL_CONSTANTS.assetDetail, "");
     let origin = domain.publishUrl;
     return domain ? origin + contentPath : "";
 }
@@ -131,7 +132,9 @@ function getPublishUrl(url) {
 function getAuthorUrl(url) {
     const domain = findCurrentDomain(url);
     let contentPath = getContentPath(url);
-    contentPath = URL_CONSTANTS.authPrefix + contentPath + URL_CONSTANTS.authSuffix;
+    const prefix = contentPath.startsWith("/content/dam") ? URL_CONSTANTS.assetDetail : URL_CONSTANTS.authPrefix;
+    const extension = contentPath.includes(".") ? "" : URL_CONSTANTS.authSuffix;
+    contentPath = prefix + contentPath + extension;
     return domain ? domain.authorUrl + contentPath : "";
 }
 
@@ -155,17 +158,40 @@ function navigateToUrlNewTab(url) {
     window.close();
 }
 
-function navigateToUrl(tabId, url) {
-    function documentGoToUrl(url) {
-        window.location = url;
-    }
+function navigateToUrl(url) {
 
-    chrome.scripting.executeScript({
-        target: {tabId: tabId},
-        func: documentGoToUrl,
-        args: [url]
-    });
-    window.close();
+
+    chrome.tabs.query({
+            active: true,
+            currentWindow: true
+        },
+        function (tabs) {
+            if (tabs.length > 0) {
+                function documentGoToUrl(destinationUrl) {
+                    window.location = destinationUrl;
+                }
+                const currentTabId = tabs[0].id;
+                chrome.scripting.executeScript({
+                    target: {tabId: currentTabId},
+                    func: documentGoToUrl,
+                    args: [url]
+                });
+                window.close();
+            }
+        });
+}
+
+function getCurrentTabUrl(callback) {
+    chrome.tabs.query({
+            active: true,
+            currentWindow: true
+        },
+        function (tabs) {
+            if (tabs.length > 0) {
+                const currentTabUrl = tabs[0].url;
+                callback(currentTabUrl);
+            }
+        });
 }
 
 function resetUI() {
@@ -177,7 +203,7 @@ function resetUI() {
         page: "-page",
         admin: "-mode-admin",
         developer: "-mode-developer"
-    }
+    };
     chrome.storage.sync.get(["mode_admin", "mode_developer"]).then((result) => {
         const isAdminMode = result.mode_admin === "on";
         const isDeveloperMode = result.mode_developer === "on";
@@ -185,10 +211,10 @@ function resetUI() {
         const buttons = document.querySelectorAll(BUTTON_SELECTOR);
         buttons.forEach((button) => {
             if (button.classList.contains(CLASSES.admin) && !isAdminMode) {
-                button.remove();
+                button.parentElement.classList.contains("button-container") ? button.parentElement.remove() : button.remove();
             }
             if (button.classList.contains(CLASSES.developer) && !isDeveloperMode) {
-                button.remove();
+                button.parentElement.classList.contains("button-container") ? button.parentElement.remove() : button.remove();
             }
         });
     });
@@ -198,7 +224,7 @@ function resetUI() {
         const aemInstance = isAemUrl(tab.url);
         const authorInstance = aemInstance && isAuthor(tab.url);
         const publishInstance = aemInstance && isPublish(tab.url);
-        const page = aemInstance && (isPreviewMode(tab.url) || isEditMode(tab.url) || isPublish(tab.url))
+        const page = aemInstance && (isPreviewMode(tab.url) || isEditMode(tab.url) || isPublish(tab.url));
         const buttons = document.querySelectorAll(BUTTON_SELECTOR);
         buttons.forEach((button) => {
             if (button.classList.contains(CLASSES.aem) && !aemInstance) {
@@ -229,11 +255,11 @@ function resetUI() {
             const programName = result['program_name'];
             const adminMode = result['mode_admin'];
             if (programName && adminMode) {
-                document.getElementById(`go-to-cloud-manager`).href = ADOBE_ENVIRONMENT_DOMAINS.experience + programName + URL_CONSTANTS.cloudManager;
-                document.getElementById(`go-to-target`).href = ADOBE_ENVIRONMENT_DOMAINS.experience + programName + URL_CONSTANTS.target;
+                document.getElementById(`go-to-cloud-manager`).setAttribute('data-href', ADOBE_ENVIRONMENT_DOMAINS.experience + programName + URL_CONSTANTS.cloudManager);
+                document.getElementById(`go-to-target`).setAttribute('data-href', ADOBE_ENVIRONMENT_DOMAINS.experience + programName + URL_CONSTANTS.target);
             }
             if (adminMode) {
-                document.getElementById(`go-to-admin-console`).href = ADOBE_ENVIRONMENT_DOMAINS.admin_console;
+                document.getElementById(`go-to-admin-console`).setAttribute('data-href', ADOBE_ENVIRONMENT_DOMAINS.admin_console);
             }
             const programId = result['program_id'];
             if (programId) {
@@ -242,9 +268,9 @@ function resetUI() {
                     const url = result[`${prefix}_env_url`];
                     const uatUrl = result[`${prefix}_prev_url`];
                     if (id) {
-                        const domain = new Domain(programId, id, null, url, uatUrl)
+                        const domain = new Domain(programId, id, null, url, uatUrl);
                         DOMAINS.push(domain);
-                        document.getElementById(`go-to-${prefix}`).href = domain.authorUrl;
+                        document.getElementById(`go-to-${prefix}`).setAttribute('data-href', domain.authorUrl);
                     }
                 });
             }
@@ -263,6 +289,6 @@ function resetUI() {
     }
 
     document.readyState !== `interactive` ? init() : document.addEventListener(`readystatechange`, () => {
-        document.readyState === `complete` && init()
+        document.readyState === `complete` && init();
     });
 })();

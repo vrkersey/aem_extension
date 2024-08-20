@@ -1,5 +1,5 @@
 body {
-    width: 550px;
+    width: 623px;
     background: #f3f0eb;
 }
 
@@ -29,7 +29,29 @@ div.container > div.middle {
 div.container > div.right {
     flex: 1;
 }
-
+.button-container {
+    position: relative;
+}
+.new-tab-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: 2px solid #343e48;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.new-tab-button svg {
+    height: 26px;
+    width: 21px;
+    fill: #343e48;
+}
+.new-tab-button:hover {
+    background-color: #ed2024;
+    background-image: linear-gradient(45deg,#ed2024,#ff8f1c)
+}
+.new-tab-button:hover svg {
+    fill: white;
+}
 .tool-button {
     display: inline-block;
     text-decoration: none;
@@ -63,4 +85,19 @@ a.tool-button[href='#'] {
     background-color: unset;
     color: #909090;
     border-color: #909090;
+    cursor: unset;
+}
+
+.tool-button:disabled + .new-tab-button{
+    background-color: unset;
+    background-image: unset;
+    border-color: #909090;
+    cursor: unset;
+}
+.tool-button:disabled + .new-tab-button svg{
+    fill: #909090;
+}
+
+.button-container .tool-button {
+    padding-right: 36px;
 }

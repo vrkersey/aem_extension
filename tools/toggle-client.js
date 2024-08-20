@@ -22,12 +22,15 @@
 
         chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
             const tab = tabs[0];
-            chrome.scripting.executeScript({
-                target: {tabId: tab.id},
-                func: toggleClientCookie
-            }, () => {
-                window.close();
-            });
+            const currentTabUrl = tabs[0].url;
+            if (!currentTabUrl.startsWith('chrome://')) {
+                chrome.scripting.executeScript({
+                    target: {tabId: tab.id},
+                    func: toggleClientCookie
+                }, () => {
+                    window.close();
+                });
+            }
         });
     };
 

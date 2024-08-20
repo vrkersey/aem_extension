@@ -167,15 +167,18 @@ function navigateToUrl(url) {
         },
         function (tabs) {
             if (tabs.length > 0) {
-                function documentGoToUrl(destinationUrl) {
-                    window.location = destinationUrl;
-                }
                 const currentTabId = tabs[0].id;
-                chrome.scripting.executeScript({
-                    target: {tabId: currentTabId},
-                    func: documentGoToUrl,
-                    args: [url]
-                });
+                const currentTabUrl = tabs[0].url;
+                if (!currentTabUrl.startsWith('chrome://')) {
+                    chrome.scripting.executeScript({
+                        target: { tabId: currentTabId },
+                        func: function(url) {
+                            history.pushState(null, '', url);
+                        },
+                        args: [url]
+                    });
+                }
+                chrome.tabs.update(currentTabId, { url: url });
                 window.close();
             }
         });

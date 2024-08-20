@@ -298,6 +298,9 @@ function resetUI() {
     function init() {
         setupDomains();
         resetUI();
+        document.getElementById("openOptions").addEventListener('click', function() {
+            chrome.runtime.openOptionsPage();
+        });
     }
 
     document.readyState !== `interactive` ? init() : document.addEventListener(`readystatechange`, () => {

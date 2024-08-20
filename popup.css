@@ -13,6 +13,20 @@ h2 {
     margin: 0;
 }
 
+#openOptions {
+    position: absolute;
+    top: 7px;
+    right: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#openOptions svg {
+    width: 30px;
+    height: 30px;
+}
+
 div.container {
     display: flex;
     column-gap: 10px;

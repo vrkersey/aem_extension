@@ -37,7 +37,7 @@
         button.addEventListener('click', function () {
             navigateToUrl(button.getAttribute('data-href'));
         });
-        button.parentElement.querySelector(`.new-tab-button`)?.addEventListener('click', function(){
+        button.closest(".button-container")?.querySelector(`.new-tab-button`)?.addEventListener('click', function(){
             navigateToUrlNewTab(button.getAttribute('data-href'));
         });
     });

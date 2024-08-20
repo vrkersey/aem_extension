@@ -214,10 +214,10 @@ function resetUI() {
         const buttons = document.querySelectorAll(BUTTON_SELECTOR);
         buttons.forEach((button) => {
             if (button.classList.contains(CLASSES.admin) && !isAdminMode) {
-                button.parentElement.classList.contains("button-container") ? button.parentElement.remove() : button.remove();
+                button.closest(".button-container") ? button.closest(".button-container").remove() : button.remove();
             }
             if (button.classList.contains(CLASSES.developer) && !isDeveloperMode) {
-                button.parentElement.classList.contains("button-container") ? button.parentElement.remove() : button.remove();
+                button.closest(".button-container") ? button.closest(".button-container").remove() : button.remove();
             }
         });
     });
@@ -232,7 +232,7 @@ function resetUI() {
 
         function disableButton(button) {
             button.disabled = true;
-            const newTabButton = button.parentElement.querySelector('.new-tab-button');
+            const newTabButton = button.closest(".button-container")?.querySelector('.new-tab-button');
             if (newTabButton) {
                 newTabButton.disabled = true;
             }

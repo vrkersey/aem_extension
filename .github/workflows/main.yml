@@ -2,30 +2,14 @@ name: Release on manifest.json Change
 
 on:
   push:
-    paths:
-      - 'manifest.json'
+    branches: ['main', 'beta']
+    paths: ['manifest.json']
 
 jobs:
   create-release:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out the code
-      uses: actions/checkout@v3
-
-    - name: Get version from manifest.json
-      id: get_version
-      run: |
-        version=$(jq -r '.version' manifest.json)
-        echo "Version: $version"
-        echo "version=$version" >> $GITHUB_ENV
-
-    - name: Create ZIP file excluding .github directory
-      run: |
-        zip_name="chrome-extension-${{ env.version }}.zip"
-        zip -r $zip_name . -x ".github/*"
-        echo "zip_name=$zip_name" >> $GITHUB_ENV
-
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
@@ -43,6 +27,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ env.zip_name }}
-        asset_name: ${{ env.zip_name }}
+        asset_path: extension.zip
+        asset_name: extension.zip
         asset_content_type: application/zip

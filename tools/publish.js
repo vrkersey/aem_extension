@@ -43,7 +43,7 @@
                 || tab.url.includes(URL_CONSTANTS.assetDetail)) {
                 const contentPath = getContentPath(tab.url);
                 const finalUrl = getManagePublicationUrl(domain, [contentPath]);
-                domain.uiEnabled ? navigateToUrlNewTab(finalUrl) : navigateToUrl(tab.id, finalUrl);
+                domain.uiEnabled ? navigateToUrlNewTab(finalUrl) : navigateToUrl(finalUrl);
             } else if (tab.url.includes(AEM_ADMIN_CONSOLES.sites)
                 || tab.url.includes(AEM_ADMIN_CONSOLES.assets)
                 || tab.url.includes(AEM_ADMIN_CONSOLES.xfs)) {
@@ -53,11 +53,11 @@
                 }, (results) => {
                     const contentPaths = results[0].result;
                     const finalUrl = getManagePublicationUrl(domain, contentPaths);
-                    domain.uiEnabled ? navigateToUrlNewTab(finalUrl) : navigateToUrl(tab.id, finalUrl);
+                    domain.uiEnabled ? navigateToUrlNewTab(finalUrl) : navigateToUrl(finalUrl);
                 });
             } else {
                 const finalUrl = getManagePublicationUrl(domain, []);
-                domain.uiEnabled ? navigateToUrlNewTab(finalUrl) : navigateToUrl(tab.id, finalUrl);
+                domain.uiEnabled ? navigateToUrlNewTab(finalUrl) : navigateToUrl(finalUrl);
             }
         });
     };

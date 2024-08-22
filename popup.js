@@ -173,12 +173,13 @@ function navigateToUrl(url) {
                     chrome.scripting.executeScript({
                         target: { tabId: currentTabId },
                         func: function(url) {
-                            history.pushState(null, '', url);
+                            window.location = url;
                         },
                         args: [url]
                     });
+                } else {
+                    chrome.tabs.update(currentTabId, { url: url });
                 }
-                chrome.tabs.update(currentTabId, { url: url });
                 window.close();
             }
         });

@@ -1,39 +1,48 @@
-name: Minify JS Files
+name: Release on manifest.json Change
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - 'manifest.json'
 
 jobs:
-  minify_and_obfuscate:
+  create-release:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Check out the code
+      uses: actions/checkout@v3
 
-      - name: Use Node.js 16
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
+    - name: Get version from manifest.json
+      id: get_version
+      run: |
+        version=$(jq -r '.version' manifest.json)
+        echo "Version: $version"
+        echo "version=$version" >> $GITHUB_ENV
 
-      - name: Minify and Obfuscate JS Files
-        run: | 
-          rm -rf .github
-          find . -name "*.js" ! -name "*.json" -exec sh -c 'npx terser {} -o {}' \;
+    - name: Create ZIP file excluding .github directory
+      run: |
+        zip_name="chrome-extension-${{ env.version }}.zip"
+        zip -r $zip_name . -x ".github/*"
+        echo "zip_name=$zip_name" >> $GITHUB_ENV
 
-      - name: Create Tag
-        id: create_tag
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git add .
-          git commit -m 'Automatically Packaged for Release'
-          git tag v1.0.$(date '+%Y%m%d%H%M%S')
-        if: success()
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      with:
+        tag_name: v${{ env.version }}
+        release_name: Chrome Extension v${{ env.version }}
+        draft: false
+        prerelease: false
 
-      - name: Push Tag
-        if: success()
-        run: |
-          git push --tags https://${{ secrets.GH_TOKEN }}@github.com/vrkersey/aem_extension.git
+    - name: Upload ZIP to Release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ env.zip_name }}
+        asset_name: ${{ env.zip_name }}
+        asset_content_type: application/zip

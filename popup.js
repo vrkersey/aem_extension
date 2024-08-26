@@ -305,7 +305,9 @@ function resetUI() {
         });
     }
 
-    document.readyState !== `interactive` ? init() : document.addEventListener(`readystatechange`, () => {
-        document.readyState === `complete` && init();
-    });
+    if (document.readyState !== "loading") {
+        init();
+    } else {
+        document.addEventListener("DOMContentLoaded", init);
+    }
 })();

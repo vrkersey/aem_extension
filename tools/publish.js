@@ -41,12 +41,14 @@
                 || tab.url.includes(URL_CONSTANTS.assetDetail)
                 || url.pathname.startsWith(URL_CONSTANTS.contentPath)
                 || tab.url.includes(URL_CONSTANTS.assetDetail)) {
-                const contentPath = getContentPath(tab.url);
+                let contentPath = getContentPath(tab.url);
+                contentPath = contentPath.startsWith("/conf") ? contentPath.substring(0, contentPath.lastIndexOf("/")) : contentPath;
                 const finalUrl = getManagePublicationUrl(domain, [contentPath]);
                 domain.uiEnabled ? navigateToUrlNewTab(finalUrl) : navigateToUrl(finalUrl);
             } else if (tab.url.includes(AEM_ADMIN_CONSOLES.sites)
                 || tab.url.includes(AEM_ADMIN_CONSOLES.assets)
-                || tab.url.includes(AEM_ADMIN_CONSOLES.xfs)) {
+                || tab.url.includes(AEM_ADMIN_CONSOLES.xfs)
+                || tab.url.includes(AEM_ADMIN_CONSOLES.templates)) {
                 chrome.scripting.executeScript({
                     target: {tabId: tab.id},
                     func: modifyDOM

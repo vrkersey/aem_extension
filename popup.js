@@ -82,7 +82,8 @@ const URL_CONSTANTS = {
 const AEM_ADMIN_CONSOLES = {
     sites: "/sites.html",
     assets: "/assets.html",
-    xfs: "/aem/experience-fragments.html"
+    xfs: "/aem/experience-fragments.html",
+    templates: "/libs/wcm/core/content/sites/templates.html"
 };
 
 function isAemUrl(url) {

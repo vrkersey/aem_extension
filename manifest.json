@@ -1,7 +1,7 @@
 {
   "name": "Paylocity Developer Tools",
   "description": "A set of tools for the Paylocity Web Team to use for easy navigation, extra information, and/or additional functionality",
-  "version": "1.2.3.1",
+  "version": "1.2.4",
   "manifest_version": 3,
   "permissions": ["activeTab", "scripting", "storage"],
   "action": {

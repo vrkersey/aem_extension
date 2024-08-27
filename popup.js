@@ -282,7 +282,7 @@ function resetUI() {
                     const url = result[`${prefix}_env_url`];
                     const uatUrl = result[`${prefix}_prev_url`];
                     if (id) {
-                        const domain = new Domain(programId, id, null, url, uatUrl);
+                        const domain = new Domain(programId, id.trim(), null, url.trim(), uatUrl.trim());
                         DOMAINS.push(domain);
                         document.getElementById(`go-to-${prefix}`).setAttribute('data-href', domain.authorUrl);
                     }

@@ -1,0 +1,129 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f3f0eb;
+    margin: 0;
+    padding: 24px;
+    color: #2b2e34;
+}
+
+form {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 24px 28px 32px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+fieldset {
+    border: 1px solid #dcdfe4;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 16px 16px 20px;
+}
+
+legend {
+    padding: 0 8px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #343e48;
+}
+
+fieldset > div {
+    margin-bottom: 12px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    font-weight: 600;
+    color: #343e48;
+}
+
+input[type="text"],
+input[type="number"] {
+    margin-top: 6px;
+    padding: 8px 10px;
+    border: 1px solid #c6c9cf;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: #0073cf;
+    box-shadow: 0 0 0 1px rgba(0, 115, 207, 0.2);
+}
+
+fieldset:last-of-type label {
+    flex-direction: row;
+    align-items: center;
+    font-weight: normal;
+    margin-right: 16px;
+}
+
+fieldset.modes input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+fieldset.modes label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #343e48; /* Paylocity blue */
+    border-radius: 3px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+
+fieldset.modes input[type="checkbox"]:checked + span::before {
+    background-color: #343e48;
+    border-color: #343e48;
+}
+
+fieldset.modes input[type="checkbox"]:checked + span::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 4px;
+    width: 4px;
+    height: 8px;
+    border: solid #A70C0E;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.modes {
+    display: flex;
+}
+
+fieldset.modes label {
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    user-select: none;
+}
+
+input[type="submit"] {
+    background-color: #343e48;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #222b31;
+}

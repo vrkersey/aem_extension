@@ -33,31 +33,31 @@ import {Helpers, URL_CONSTANTS} from '../utils/helperUtils.js';
     }
 
     const goToProd = async function(currentTab) {
-        const options = await StorageUtil.local.get();
+        const options = await StorageUtil.get();
         const destinationUrl = Helpers.buildDefaultAdobeCloudDomain("author", options.program_id, options.prod_env_id);
         currentTab ? BrowserUtil.updateUrl(destinationUrl) : BrowserUtil.newTab(destinationUrl);
     }
 
     const goToStage = async function(currentTab) {
-        const options = await StorageUtil.local.get();
+        const options = await StorageUtil.get();
         const destinationUrl = Helpers.buildDefaultAdobeCloudDomain("author", options.program_id, options.stage_env_id);
         currentTab ? BrowserUtil.updateUrl(destinationUrl) : BrowserUtil.newTab(destinationUrl);
     }
 
     const goToDev = async function(currentTab) {
-        const options = await StorageUtil.local.get();
+        const options = await StorageUtil.get();
         const destinationUrl = Helpers.buildDefaultAdobeCloudDomain("author", options.program_id, options.dev_env_id);
         currentTab ? BrowserUtil.updateUrl(destinationUrl) : BrowserUtil.newTab(destinationUrl);
     }
 
     const goToCloudManager = async function(currentTab) {
-        const options = await StorageUtil.local.get();
+        const options = await StorageUtil.get();
         const destinationUrl = `https://experience.adobe.com/#/${options.program_name}/cloud-manager/home.html/program/${options.program_id}`;
         currentTab ? BrowserUtil.updateUrl(destinationUrl) : BrowserUtil.newTab(destinationUrl);
     }
 
     const goToTarget = async function(currentTab) {
-        const options = await StorageUtil.local.get();
+        const options = await StorageUtil.get();
         const destinationUrl = `https://experience.adobe.com/#/${options.program_name}/target/activities`;
         currentTab ? BrowserUtil.updateUrl(destinationUrl) : BrowserUtil.newTab(destinationUrl);
     }

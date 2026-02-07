@@ -133,7 +133,7 @@ function deriveContext(url, domain) {
 async function rebuildState() {
     const [url, options] = await Promise.all([
         BrowserUtil.currentUrl(),
-        StorageUtil.local.get()
+        StorageUtil.get()
     ]);
 
     const domains = await buildDomains(options);
@@ -173,7 +173,6 @@ function scheduleRebuild() {
     }, 75);
 }
 
-rebuildState();
 BrowserUtil.onActiveTabChanged(scheduleRebuild);
 BrowserUtil.onStorageChanged(async (changes, area) => {
     if (area !== "local") return;
@@ -202,3 +201,5 @@ BrowserUtil.onMessage(async (msg, _, sendResponse) => {
         sendResponse({ success: true });
     }
 });
+
+rebuildState();

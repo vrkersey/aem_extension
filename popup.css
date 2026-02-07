@@ -137,8 +137,9 @@ a.tool-button[href='#'] {
 .button-container .tool-button {
     padding-right: 36px;
 }
-
-.-mode-admin:disabled,
-.-mode-developer:disabled {
-    display: none;
+.-client {
+    outline: 3px dashed blue;
+}
+.-prospect {
+    outline: 3px dashed darkorange;
 }

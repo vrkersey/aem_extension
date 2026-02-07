@@ -6,6 +6,10 @@ function disabledButton(button) {
     button.disabled = true;
 }
 
+function hideButton(button) {
+    button.style.display = "none";
+}
+
 function renderUI(state) {
     if (!state.configured) {
         const mainContent = document.getElementById('main-content');
@@ -41,8 +45,18 @@ function renderUI(state) {
         if (button.classList.contains(CLASSES.author) && !context.isAuthor) disabledButton(button);
         if (button.classList.contains(CLASSES.publish) && !context.isPublish) disabledButton(button);
         if (button.classList.contains(CLASSES.page) && !context.isPage) disabledButton(button);
-        if (button.classList.contains(CLASSES.admin) && !modes.admin) disabledButton(button);
-        if (button.classList.contains(CLASSES.developer) && !modes.developer) disabledButton(button);
+        if (button.classList.contains(CLASSES.admin) && !modes.admin) hideButton(button);
+        if (button.classList.contains(CLASSES.developer) && !modes.developer) hideButton(button);
+    });
+
+    const cookieToggleButton = document.getElementById("toggle-client-cookie");
+    BrowserUtil.isClient().then(isClient => {
+        cookieToggleButton?.classList.add(isClient ? "-client" : "-prospect");
+    });
+    BrowserUtil.hasCookiePermission().then(hasPermission => {
+        if (!hasPermission) {
+            hideButton(cookieToggleButton)
+        }
     });
 }
 

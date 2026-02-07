@@ -4,13 +4,16 @@
   "version": "1.3.0.0",
   "description": "A set of tools for the Paylocity Web Team to use for easy navigation, extra information, and/or additional functionality",
 
-  "permissions": ["activeTab", "tabs", "scripting", "storage"],
+  "permissions": ["activeTab", "tabs", "scripting", "storage", "cookies"],
 
   "action": {
     "default_popup": "popup.html"
   },
 
-  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
 
   "icons": {
     "16": "icons/icon16.png",
@@ -23,11 +26,22 @@
 
   "background": {
     "service_worker": "background.js",
-    "type": "module"
+    "type": "module",
+    "scripts": ["background.js"]
   },
   "host_permissions": [
     "https://*.paylocity.com/*",
     "http://localhost:4502/*",
-    "http://localhost:4503/*"
-  ]
+    "http://localhost:4503/*",
+    "https://*.adobeaemcloud.com/"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "marketing_aem_dev_tool@paylocity.com",
+      "strict_min_version": "115.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  }
 }

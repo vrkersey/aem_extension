@@ -28,14 +28,14 @@
                 }
             });
 
-            await StorageUtil.local.clear();
-            await StorageUtil.local.set(json);
+            await StorageUtil.clear();
+            await StorageUtil.set(json);
 
             window.close();
         });
 
         const restoreOptions = async () => {
-            const result = await StorageUtil.local.get();
+            const result = await StorageUtil.get();
 
             for (const [key, value] of Object.entries(result)) {
                 if (value) {

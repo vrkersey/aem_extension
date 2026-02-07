@@ -22,10 +22,9 @@ export const Helpers = {
         const toolButtons = document.querySelectorAll(`button:not([disabled])[id^="${idPrefix}"]`);
         toolButtons.forEach(button => button.addEventListener('click', (e) => {
             handler(e.currentTarget, !e.currentTarget.classList.contains("new-tab-button"))
-                .then(() => {})//window.close())
-                .catch(() => {
-                    //window.close();
-                });
+                .finally(() => {
+                  setTimeout(() => window.close(), 50)
+                })
         }));
     },
     isAemPage(url, domain, isAuthor, isPublish) {

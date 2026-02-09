@@ -1,0 +1,26 @@
+<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 256 256" width="256" height="256" role="img">
+    <defs>
+        <linearGradient id="linear-gradient" x1="81.68" y1="66.43" x2="2.33" y2="66.43" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#FF8F1C"></stop>
+            <stop offset="1" stop-color="#ed2024"></stop>
+        </linearGradient>
+        <linearGradient id="linear-gradient-2" x1="915.44" y1="-1512.87" x2="836.09" y2="-1512.87" gradientTransform="rotate(180 460.08 -746.685)" xlink:href="#linear-gradient">
+        </linearGradient>
+    </defs>
+    <g transform="scale(2.95)">
+        <path d="M0 47.57v-.08a.5.5 0 01.43-.55h27.68a.44.44 0 01.4.36c5.3 20.08 10.33 26.78 14.69 26.78 6.06 0 10.82-13 13.17-21 .17-.58.91-.35.81.26-5 32.61-20 32.61-24.82 32.61C17.28 85.93 4.49 69.84 0 47.57zm86.38-.14a.47.47 0 00-.44-.49H61.25a.44.44 0 00-.41.43C59.12 64.53 54.74 77 47.2 83.93a.54.54 0 000 .77.48.48 0 00.16.12 22.46 22.46 0 006.71 1.06c15.14 0 27.93-16.37 32.33-38.45z" fill="url(#linear-gradient)"></path>
+        <path d="M86.38 38.36a.64.64 0 000 .07.49.49 0 01-.38.57H58.29a.42.42 0 01-.4-.35c-5.3-20.1-10.33-26.8-14.69-26.8-6.06 0-10.82 13-13.17 21-.17.58-.91.35-.81-.26C34.23 0 49.24 0 54 0c15.12 0 27.91 16.09 32.38 38.36zM0 38.49a.47.47 0 00.43.5h24.71a.45.45 0 00.42-.43C27.28 21.4 31.66 8.88 39.2 2a.53.53 0 000-.76.48.48 0 00-.16-.12 22.16 22.16 0 00-6.7-1.07C17.19.05 4.4 16.42 0 38.49z" fill="url(#linear-gradient-2)"></path>
+    </g>
+    <text
+        x="128"
+        y="138"
+        text-anchor="middle"
+        dominant-baseline="middle"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="105"
+        font-weight="700"
+        fill="#343e48"
+        style="paint-order: stroke; stroke: #fff; stroke-width: 16px;">
+        AEM
+    </text>
+</svg>

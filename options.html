@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>AEM Extension Options</title>
+    <link rel="stylesheet" href="options.css" type="text/css">
 </head>
 <body>
 <form id="options">
@@ -10,7 +11,7 @@
         <div>
             <label>
                 Program ID
-                <input type="number" name="program_id">
+                <input type="text" name="program_id" inputmode="numeric" pattern="[0-9]*" required>
             </label>
         </div>
         <div>
@@ -25,7 +26,7 @@
         <div>
             <label>
                 Environment ID
-                <input type="number" name="dev_env_id">
+                <input type="text" name="dev_env_id" inputmode="numeric" pattern="[0-9]*" required>
             </label>
         </div>
         <div>
@@ -36,8 +37,8 @@
         </div>
         <div>
             <label>
-                Preview URL
-                <input type="text" name="dev_prev_url">
+                <!--Preview URL-->
+                <input type="hidden" name="dev_prev_url" value="">
             </label>
         </div>
     </fieldset>
@@ -46,7 +47,7 @@
         <div>
             <label>
                 Environment ID
-                <input type="number" name="stage_env_id">
+                <input type="text" name="stage_env_id" inputmode="numeric" pattern="[0-9]*" required>
             </label>
         </div>
         <div>
@@ -57,8 +58,8 @@
         </div>
         <div>
             <label>
-                Preview URL
-                <input type="text" name="stage_prev_url">
+                <!--Preview URL-->
+                <input type="hidden" name="dev_prev_url" value="">
             </label>
         </div>
     </fieldset>
@@ -67,7 +68,7 @@
         <div>
             <label>
                 Environment ID
-                <input type="number" name="prod_env_id">
+                <input type="text" name="prod_env_id" inputmode="numeric" pattern="[0-9]*" required>
             </label>
         </div>
         <div>
@@ -83,15 +84,16 @@
             </label>
         </div>
     </fieldset>
-    <fieldset>
+    <fieldset class="modes">
         <legend>Modes</legend>
         <label>
-            Admin
             <input type="checkbox" name="mode_admin">
+            <span>Admin</span>
         </label>
+
         <label>
-            Developer
             <input type="checkbox" name="mode_developer">
+            <span>Developer</span>
         </label>
     </fieldset>
     <input type="submit" value="Submit">

@@ -66,6 +66,28 @@ div.container > div.right {
 .new-tab-button:hover svg {
     fill: white;
 }
+.dev-button {
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 2px solid #343e48;
+    border-radius: 10px;
+    padding: 3px 0 0;
+    cursor: pointer;
+}
+.dev-button:disabled{
+    background-color: unset;
+    color: #909090;
+    border-color: #909090;
+    cursor: unset;
+}
+.dev-button:hover:not([disabled]) {
+     background-color: #E6001F;
+ }
+.dev-button svg {
+    height: 25px;
+    width: 30px;
+}
 .tool-button {
     display: inline-block;
     text-decoration: none;
@@ -114,4 +136,10 @@ a.tool-button[href='#'] {
 
 .button-container .tool-button {
     padding-right: 36px;
+}
+.-client {
+    outline: 3px dashed blue;
+}
+.-prospect {
+    outline: 3px dashed darkorange;
 }

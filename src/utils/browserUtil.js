@@ -26,6 +26,14 @@ export const StorageUtil = {
             && options.dev_env_id
             && options.stage_env_id
             && options.prod_env_id)
+    },
+    sync: {
+        async get(keys = null) {
+            return await extension.storage.sync.get(keys);
+        },
+        async clear() {
+            await extension.storage.sync.clear();
+        }
     }
 };
 

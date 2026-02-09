@@ -16,7 +16,7 @@
                 }
 
                 if (url.endsWith("/")) {
-                    url.substring(0, url.length - 1);
+                    url = url.replace(/\/$/, "")
                 }
 
                 return url;
@@ -36,7 +36,16 @@
         });
 
         const restoreOptions = async () => {
-            const result = await StorageUtil.get();
+            let result = await StorageUtil.get();
+
+            if (!result.program_id) {
+                const syncResult = await StorageUtil.sync.get();
+                if (syncResult && Object.keys(syncResult).length > 0) {
+                    result = syncResult;
+                    await StorageUtil.set(syncResult);
+                    await StorageUtil.sync.clear();
+                }
+            }
 
             for (const [key, value] of Object.entries(result)) {
                 if (value) {

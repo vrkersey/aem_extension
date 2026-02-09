@@ -153,7 +153,7 @@ async function rebuildState() {
             admin: options.mode_admin === "on",
             developer: options.mode_developer === "on"
         },
-        configured: StorageUtil.isConfigured(),
+        configured: await StorageUtil.isConfigured(),
         domain: {
             authorUrl: currentDomain?.authorUrl,
             publishUrl: currentDomain?.publishUrl,

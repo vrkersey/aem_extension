@@ -1,0 +1,8 @@
+{
+  "name": "paylocity-aem-extension",
+  "version": "1.3.2",
+  "scripts": {
+    "build:dev": "node scripts/build.js dev",
+    "build:release": "node scripts/build.js release"
+  }
+}

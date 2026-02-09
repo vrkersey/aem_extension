@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Paylocity Developer Tools",
-  "version": "1.3.0.0",
+  "version": "__VERSION__",
   "description": "A set of tools for the Paylocity Web Team to use for easy navigation, extra information, and/or additional functionality",
 
   "permissions": ["activeTab", "tabs", "scripting", "storage", "cookies"],
@@ -25,9 +25,8 @@
   },
 
   "background": {
-    "service_worker": "background.js",
-    "type": "module",
-    "scripts": ["background.js"]
+    "scripts": ["background.js"],
+    "type": "module"
   },
   "host_permissions": [
     "https://*.paylocity.com/*",
@@ -37,7 +36,7 @@
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "marketing_aem_dev_tool@paylocity.com",
+      "id": "marketing_aem_tool@paylocity.com",
       "strict_min_version": "115.0",
       "data_collection_permissions": {
         "required": ["none"]

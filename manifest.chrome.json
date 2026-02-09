@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Paylocity Developer Tools",
+  "version": "__VERSION__",
+  "description": "A set of tools for the Paylocity Web Team to use for easy navigation, extra information, and/or additional functionality",
+
+  "permissions": ["activeTab", "tabs", "scripting", "storage", "cookies"],
+
+  "action": {
+    "default_popup": "popup.html"
+  },
+
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "64": "icons/icon64.png",
+    "128": "icons/icon128.png",
+    "256": "icons/icon256.png"
+  },
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "host_permissions": [
+    "https://*.paylocity.com/*",
+    "http://localhost:4502/*",
+    "http://localhost:4503/*",
+    "https://*.adobeaemcloud.com/"
+  ],
+  "minimum_chrome_version": "114"
+}

@@ -1,5 +1,5 @@
 (function () {
-    import('./src/utils/browserUtil.js').then(({StorageUtil}) => {
+    import('./src/utils/browserUtil.js').then(({StorageUtil, CONFIG_VERSION}) => {
         const form = document.getElementById("options");
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -28,6 +28,7 @@
                 }
             });
 
+            json['configVersion'] = CONFIG_VERSION;
             await StorageUtil.clear();
             await StorageUtil.set(json);
 

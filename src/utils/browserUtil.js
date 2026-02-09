@@ -1,6 +1,8 @@
 const isFirefox = typeof browser !== 'undefined';
 const extension = isFirefox ? browser : chrome;
 
+export const CONFIG_VERSION = 2;
+
 export const StorageUtil = {
     async set(options) {
         await extension.storage.local.set(options);
@@ -12,6 +14,18 @@ export const StorageUtil = {
 
     async clear() {
         await extension.storage.local.clear();
+    },
+
+    async isConfigured() {
+        const options = await this.get();
+        if (options.configVersion !== CONFIG_VERSION) {
+            return false;
+        }
+        return Boolean(
+            options.program_id
+            && options.dev_env_id
+            && options.stage_env_id
+            && options.prod_env_id)
     }
 };
 

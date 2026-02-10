@@ -37,6 +37,18 @@ export const StorageUtil = {
     }
 };
 
+function getCookieDomainForUrl(url) {
+    const hostname = url.hostname;
+
+    if (hostname.includes("localhost")) {
+        return "localhost";
+    } else if (hostname.includes('paylocity')) {
+        return '.paylocity.com';
+    } else {
+        return hostname;
+    }
+}
+
 export const BrowserUtil = {
     async newTab(url) {
         const [tab] = await extension.tabs.query({ active: true, currentWindow: true });
@@ -94,18 +106,20 @@ export const BrowserUtil = {
     async toggleClientCookie() {
         const state = await this.getState();
         const url = new URL(state.currentUrl);
+        const domain = getCookieDomainForUrl(url);
 
         const existing = await extension.cookies.get({
             name: "pcty_audience",
             url: url.origin
         });
 
-        const value = existing?.value === "client" ? "" : "client";
+        const newValue = existing?.value === "client" ? "" : "client";
 
         await extension.cookies.set({
             name: "pcty_audience",
-            value,
+            value: newValue,
             url: url.origin,
+            domain
         });
     },
     openOptions() {

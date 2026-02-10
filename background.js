@@ -15,6 +15,7 @@ let ExtensionState = {
         isPublish: false,
         isPage: false,
     },
+    hasCookiePermission: false,
     configured: false,
     domain: {
         authorUrl: null,
@@ -153,6 +154,7 @@ async function rebuildState() {
             admin: options.mode_admin === "on",
             developer: options.mode_developer === "on"
         },
+        hasCookiePermission: await BrowserUtil.hasCookiePermission(),
         configured: await StorageUtil.isConfigured(),
         domain: {
             authorUrl: currentDomain?.authorUrl,

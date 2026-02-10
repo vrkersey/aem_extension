@@ -50,14 +50,14 @@ function renderUI(state) {
     });
 
     const cookieToggleButton = document.getElementById("toggle-client-cookie");
-    BrowserUtil.isClient().then(isClient => {
-        cookieToggleButton?.classList.add(isClient ? "-client" : "-prospect");
-    });
-    BrowserUtil.hasCookiePermission().then(hasPermission => {
-        if (!hasPermission) {
-            hideButton(cookieToggleButton)
-        }
-    });
+    if (!state.hasCookiePermission) {
+        disabledButton(cookieToggleButton);
+    }
+    if (!cookieToggleButton.disabled) {
+        BrowserUtil.isClient().then(isClient => {
+            cookieToggleButton?.classList.add(isClient ? "-client" : "-prospect");
+        });
+    }
 }
 
 function init() {

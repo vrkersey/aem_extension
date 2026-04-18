@@ -1,167 +1,139 @@
-const isFirefox = typeof browser !== 'undefined';
-const extension = isFirefox ? browser : chrome;
+'use strict';
 
-export const CONFIG_VERSION = 2;
+/**
+ * Cross-browser API abstraction layer.
+ * Isolates Chrome vs Firefox differences so tool code stays portable.
+ *
+ * Key difference: Chrome MV3 uses scripting.executeScript for same-session
+ * navigation (keeps cookies / scroll position); Firefox uses tabs.update.
+ */
+const BrowserUtil = (function () {
+  const isFirefox = __IS_FIREFOX__;
+  const api = isFirefox ? browser : chrome;
 
-export const StorageUtil = {
-    async set(options) {
-        await extension.storage.local.set(options);
-    },
-
-    async get(keys = null) {
-        return await extension.storage.local.get(keys);
-    },
-
-    async clear() {
-        await extension.storage.local.clear();
-    },
-
-    async isConfigured() {
-        const options = await this.get();
-        if (options.configVersion !== CONFIG_VERSION) {
-            return false;
-        }
-        return Boolean(
-            options.program_id
-            && options.dev_env_id
-            && options.stage_env_id
-            && options.prod_env_id)
-    },
-    sync: {
-        async get(keys = null) {
-            return await extension.storage.sync.get(keys);
-        },
-        async clear() {
-            await extension.storage.sync.clear();
-        }
-    }
-};
-
-function getCookieDomainForUrl(url) {
-    const hostname = url.hostname;
-
-    if (hostname.includes("localhost")) {
-        return "localhost";
-    } else if (hostname.includes('paylocity')) {
-        return '.paylocity.com';
+  /**
+   * Navigate the given tab to a URL.
+   * Pass newTab=true (or Ctrl/Meta+click) to open in a new tab instead.
+   */
+  async function navigate(tabId, url, newTab) {
+    if (newTab) {
+      api.tabs.create({ url });
+    } else if (isFirefox) {
+      api.tabs.update(tabId, { url, loadReplace: false });
     } else {
-        return hostname;
+      try {
+        await api.scripting.executeScript({
+          target: { tabId },
+          func: (nextUrl) => {
+            window.location.assign(nextUrl)
+          },
+          args: [url]
+        });
+      } catch (e) {
+        api.tabs.update(tabId, { url });
+      }
     }
-}
+    window.close();
+  }
 
-export const BrowserUtil = {
-    async newTab(url) {
-        const [tab] = await extension.tabs.query({ active: true, currentWindow: true });
-        if (!tab || typeof tab.index !== "number") {
-            await extension.tabs.create({ url });
-            return;
-        }
+  /**
+   * Open a URL in a new tab (background).
+   */
+  async function openTab(url) {
+    return api.tabs.create({ url });
+  }
 
-        await extension.tabs.create({
-            url,
-            index: tab.index + 1,
-            active: true
-        });
-    },
+  /**
+   * Return the active tab in the current window, or null.
+   */
+  async function getActiveTab() {
+    const tabs = await api.tabs.query({ active: true, currentWindow: true });
+    return tabs[0] || null;
+  }
 
-    async updateUrl(url) {
-        const [tab] = await extension.tabs.query({ active: true, currentWindow: true });
-        if (!tab?.id) return;
-        if (isFirefox) {
-            // Firefox has issues with back history so using default tabs api navigation instead.
-            await extension.tabs.update(tab.id, { url });
-            return;
-        }
-        if (tab.url && !tab.url.startsWith("chrome://")) {
-            await extension.scripting.executeScript({
-                target: { tabId: tab.id },
-                func: (nextUrl) => {
-                    window.location.assign(nextUrl)
-                },
-                args: [url]
-            })
-        } else {
-            await extension.tabs.update((tab.id, {url}))
-        }
-    },
-    async currentUrl() {
-        const [tab] = await extension.tabs.query({ active: true, currentWindow: true });
-        return tab?.url ?? null;
-    },
-    async hasCookiePermission(url) {
-        const origins = [
-            "https://*.paylocity.com/*",
-            "http://localhost:4502/*",
-            "http://localhost:4503/*",
-            "https://*.adobeaemcloud.com/"
-        ];
-        return await extension.permissions.contains({ origins });
-    },
-    async isClient() {
-        const state = await this.getState();
-        const url = new URL(state.currentUrl)
-        const cookie = await extension.cookies.get({name: "pcty_audience", url: url.origin});
-        return cookie?.value === "client";
-    },
-    async toggleClientCookie() {
-        const state = await this.getState();
-        const url = new URL(state.currentUrl);
-        const domain = getCookieDomainForUrl(url);
+  /**
+   * Read one or more keys from local storage.
+   */
+  async function storageGet(keys) {
+    return api.storage.local.get(keys);
+  }
 
-        const existing = await extension.cookies.get({
-            name: "pcty_audience",
-            url: url.origin
-        });
+  /**
+   * Write data to local storage.
+   */
+  async function storageSet(data) {
+    return api.storage.local.set(data);
+  }
 
-        const newValue = existing?.value === "client" ? "" : "client";
+  /**
+   * Read one or more keys from sync storage.
+   */
+  async function storageSyncGet(keys) {
+    return api.storage.sync.get(keys);
+  }
 
-        await extension.cookies.set({
-            name: "pcty_audience",
-            value: newValue,
-            url: url.origin,
-            domain
-        });
-    },
-    openOptions() {
-        extension.runtime.openOptionsPage();
-    },
-    async getState() {
-        return await extension.runtime.sendMessage({ type: "GET_STATE" });
-    },
-    async executeInActiveTab(func, args = []) {
-        const [tab] = await extension.tabs.query({active: true, currentWindow: true});
-        if (!tab?.id) return;
-        await extension.scripting.executeScript({
-            target: {tabId: tab.id},
-            func,
-            args
-        });
-    },
+  /**
+   * Write data to sync storage.
+   */
+  async function storageSyncSet(data) {
+    return api.storage.sync.set(data);
+  }
 
-    onStorageChanged(handler) {
-        extension.storage.onChanged.addListener(handler);
-    },
+  /**
+   * Check whether the extension currently holds the given permissions.
+   */
+  async function permissionsContains(descriptor) {
+    try {
+      if (api.permissions && api.permissions.contains) {
+        return api.permissions.contains(descriptor);
+      }
+    } catch (_) {
+      // ignore
+    }
+    return false;
+  }
 
-    onActiveTabChanged(handler) {
-        // Fired when the active tab changes
-        extension.tabs.onActivated.addListener(() => handler());
+  /**
+   * Open the extension's options page in a new tab.
+   */
+  function openOptionsPage() {
+    api.runtime.openOptionsPage();
+  }
 
-        // Fired when the URL of the active tab changes (navigation)
-        extension.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-            if (tab.active && changeInfo.url) {
-                handler();
-            }
-        });
+  /**
+   * Attach a unified click handler to a button that treats both
+   * Ctrl/Cmd+click and middle-click as "open in new tab" (altClick=true).
+   *
+   * Middle clicks fire `auxclick` (not `click`) so both events are needed.
+   * `e.preventDefault()` on auxclick suppresses auto-scroll on Windows.
+   *
+   * handler(altClick: boolean) — called with true when a new tab is wanted.
+   */
+  function wireClick(el, handler) {
+    if (!el) return;
+    el.addEventListener('click', function (e) {
+      handler(e.ctrlKey || e.metaKey);
+    });
+    el.addEventListener('auxclick', function (e) {
+      if (e.button === 1) {
+        e.preventDefault();
+        handler(true);
+      }
+    });
+  }
 
-        // Chrome-specific: switching windows can change the active tab context
-        if (!isFirefox) {
-            extension.windows.onFocusChanged.addListener(() => handler());
-        }
-    },
-    onMessage(handler) {
-        extension.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-            handler(msg, sender, sendResponse);
-            return true; // keeps the message channel open for async responses
-        });
-    },
-};
+  return {
+    isFirefox,
+    api,
+    navigate,
+    openTab,
+    getActiveTab,
+    storageGet,
+    storageSet,
+    storageSyncGet,
+    storageSyncSet,
+    permissionsContains,
+    openOptionsPage,
+    wireClick,
+  };
+})();

@@ -1,104 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>AEM Extension Options</title>
-    <link rel="stylesheet" href="options.css" type="text/css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AEM Developer Tools — Options</title>
+  <link rel="stylesheet" href="options.css">
 </head>
 <body>
-<form id="options">
-    <fieldset>
-        <legend>Adobe Experience Cloud Program</legend>
-        <div>
-            <label>
-                Program ID
-                <input type="text" name="program_id" inputmode="numeric" pattern="[0-9]*" required>
-            </label>
-        </div>
-        <div>
-            <label>
-                Program Name
-                <input type="text" name="program_name">
-            </label>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Develop Environment Configurations</legend>
-        <div>
-            <label>
-                Environment ID
-                <input type="text" name="dev_env_id" inputmode="numeric" pattern="[0-9]*" required>
-            </label>
-        </div>
-        <div>
-            <label>
-                Domain URL
-                <input type="text" name="dev_env_url">
-            </label>
-        </div>
-        <div>
-            <label>
-                <!--Preview URL-->
-                <input type="hidden" name="dev_prev_url" value="">
-            </label>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Stage Environment Configurations</legend>
-        <div>
-            <label>
-                Environment ID
-                <input type="text" name="stage_env_id" inputmode="numeric" pattern="[0-9]*" required>
-            </label>
-        </div>
-        <div>
-            <label>
-                Domain URL
-                <input type="text" name="stage_env_url">
-            </label>
-        </div>
-        <div>
-            <label>
-                <!--Preview URL-->
-                <input type="hidden" name="dev_prev_url" value="">
-            </label>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Production Environment Configurations</legend>
-        <div>
-            <label>
-                Environment ID
-                <input type="text" name="prod_env_id" inputmode="numeric" pattern="[0-9]*" required>
-            </label>
-        </div>
-        <div>
-            <label>
-                Domain URL
-                <input type="text" name="prod_env_url">
-            </label>
-        </div>
-        <div>
-            <label>
-                Preview URL
-                <input type="text" name="prod_prev_url">
-            </label>
-        </div>
-    </fieldset>
-    <fieldset class="modes">
-        <legend>Modes</legend>
-        <label>
-            <input type="checkbox" name="mode_admin">
-            <span>Admin</span>
-        </label>
 
-        <label>
-            <input type="checkbox" name="mode_developer">
-            <span>Developer</span>
-        </label>
-    </fieldset>
-    <input type="submit" value="Submit">
-</form>
+  <div id="page">
+    <header>
+      <h1>Paylocity AEM Developer Tools</h1>
+      <p class="subtitle">Configure your AEM environment connections.</p>
+    </header>
 
-<script src="options.js"></script>
+    <form id="options-form" novalidate>
+
+      <!-- ── Program Configuration ──────────────────────────────────────── -->
+      <section>
+        <h2>Program Configuration</h2>
+        <p class="section-hint">
+          These values identify your Adobe Cloud AEM program and are required for
+          environment navigation.
+        </p>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="programName">Program Name</label>
+            <input type="text" id="programName" name="programName"
+                   placeholder="Paylocity" autocomplete="off">
+            <span class="field-hint">Display label used in the popup.</span>
+          </div>
+          <div class="field">
+            <label for="program_id">Program ID <span class="required">*</span></label>
+            <input type="number" id="program_id" name="program_id" min="1"
+                   placeholder="e.g. 12345" autocomplete="off">
+            <span class="field-hint">Numeric Adobe Cloud program identifier.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Environment IDs ────────────────────────────────────────────── -->
+      <section>
+        <h2>Environment IDs <span class="required">*</span></h2>
+        <p class="section-hint">
+          At least one environment ID is required. Used to construct Adobe Cloud URLs:
+          <code>https://author-p{programId}-e{envId}.adobeaemcloud.com</code>
+        </p>
+
+        <div class="field-row three-col">
+          <div class="field">
+            <label for="dev_env_id">Dev Environment ID</label>
+            <input type="number" id="dev_env_id" name="dev_env_id" min="1"
+                   placeholder="e.g. 67890" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="stage_env_id">Stage Environment ID</label>
+            <input type="number" id="stage_env_id" name="stage_env_id" min="1"
+                   placeholder="e.g. 67891" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="prod_env_id">Prod Environment ID</label>
+            <input type="number" id="prod_env_id" name="prod_env_id" min="1"
+                   placeholder="e.g. 67892" autocomplete="off">
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Custom Domain URLs ─────────────────────────────────────────── -->
+      <section>
+        <h2>Custom Publish Domain URLs <span class="optional">(optional)</span></h2>
+        <p class="section-hint">
+          Override the default Adobe Cloud publish URL for each environment.
+          Leave blank to use the standard pattern.  Include the scheme and
+          host only (e.g. <code>https://www.paylocity.com</code>).
+        </p>
+
+        <div class="field-row two-col">
+          <div class="field">
+            <label for="dev_env_url">Dev Publish URL</label>
+            <input type="url" id="dev_env_url" name="dev_env_url"
+                   placeholder="https://dev.paylocity.com" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="stage_env_url">Stage Publish URL</label>
+            <input type="url" id="stage_env_url" name="stage_env_url"
+                   placeholder="https://stage.paylocity.com" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="prod_env_url">Prod Publish URL</label>
+            <input type="url" id="prod_env_url" name="prod_env_url"
+                   placeholder="https://www.paylocity.com" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="prod_prev_url">Prod Preview URL</label>
+            <input type="url" id="prod_prev_url" name="prod_prev_url"
+                   placeholder="https://preview.paylocity.com" autocomplete="off">
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Mode Toggles ───────────────────────────────────────────────── -->
+      <section>
+        <h2>Mode Toggles</h2>
+        <p class="section-hint">
+          Enable additional tools for power users.  These unlock features that
+          are hidden by default to keep the interface clean for general use.
+        </p>
+
+        <div class="toggle-list">
+          <label class="toggle-field">
+            <input type="checkbox" id="mode_developer" name="mode_developer">
+            <span class="toggle-label">
+              <strong>Developer Mode</strong>
+              <span class="toggle-desc">Unlocks JSON view, Cloud Manager, and Adobe Target links.</span>
+            </span>
+          </label>
+          <label class="toggle-field">
+            <input type="checkbox" id="mode_admin" name="mode_admin">
+            <span class="toggle-label">
+              <strong>Admin Mode</strong>
+              <span class="toggle-desc">Unlocks Purge Cache and Adobe Admin Console link.</span>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      __FIREFOX_CONFIG_HINT__
+
+      <!-- ── Actions ────────────────────────────────────────────────────── -->
+      <div class="form-actions">
+        <button type="submit" id="btn-save">Save Configuration</button>
+        <button type="button" id="btn-clear">Clear All</button>
+        <span id="save-status" aria-live="polite"></span>
+      </div>
+
+    </form><!-- /#options-form -->
+  </div><!-- /#page -->
+
+  <script src="src/utils/browserUtil.js"></script>
+  <script src="options.js"></script>
 </body>
 </html>

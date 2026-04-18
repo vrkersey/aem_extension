@@ -1,20 +1,27 @@
-import { BrowserUtil } from '../utils/browserUtil.js';
-import { Helpers, URL_CONSTANTS } from '../utils/helperUtils.js';
+'use strict';
 
+/**
+ * JSON View Toggle
+ * Appends /jcr:content.infinity.json to the current page path to view
+ * the full JCR content tree.  If already in JSON view, navigates back
+ * to the editor.
+ */
 (function () {
-    'use strict';
+  window.__aemToolInits = window.__aemToolInits || [];
+  window.__aemToolInits.push(function (state, tabId) {
+    const btn = document.getElementById('btn-toggle-json');
+    if (!btn) return;
+    BrowserUtil.wireClick(btn, (alt) => {
+      const url    = state.currentUrl;
+      const path   = HelperUtils.getContentPath(url, { contentRoot: HelperUtils.CONTENT_ROOT });
+      const origin = HelperUtils.getOrigin(url);
+      if (!path || !origin) return;
 
-    const id = 'json';
-    async function init(button, currentTab) {
-        const state = await BrowserUtil.getState();
-        const path = Helpers.getPagePath(state);
-        let destinationUrl;
-        if (path.includes("jcr:content") && path.endsWith(".json")) {
-            destinationUrl = state.domain.authorUrl + URL_CONSTANTS.authPrefix + path.substring(0, path.indexOf("/jcr:content")) + ".html";
-        } else {
-            destinationUrl = state.domain.authorUrl + path + "/jcr:content.infinity.json";
-        }
-        currentTab ? BrowserUtil.updateUrl(destinationUrl) : BrowserUtil.newTab(destinationUrl);
-    }
-    Helpers.registerToolButtons(id, init);
+      if (HelperUtils.isJsonView(url)) {
+        BrowserUtil.navigate(tabId, HelperUtils.buildEditorUrl(origin, path), alt);
+      } else {
+        BrowserUtil.navigate(tabId, HelperUtils.buildJsonUrl(origin, path), alt);
+      }
+    });
+  });
 })();

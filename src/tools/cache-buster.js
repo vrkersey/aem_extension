@@ -1,34 +1,17 @@
-import { BrowserUtil } from '../utils/browserUtil.js';
-import { Helpers } from '../utils/helperUtils.js';
+'use strict';
 
+/**
+ * Cache Buster
+ * Appends (or replaces) a random 6-digit cachebust query parameter
+ * on the current URL to break CDN and browser caches.
+ */
 (function () {
-    'use strict';
-
-    const id = 'cache-buster';
-    async function init(button, currentTab){
-        const state = await BrowserUtil.getState();
-        const randomNumber = Math.floor(100000 + Math.random() * 900000);
-        const destinationUrl = new URL(state.currentUrl);
-        destinationUrl?.searchParams.set(id, randomNumber.toString());
-        currentTab ? BrowserUtil.updateUrl(destinationUrl.toString()) : BrowserUtil.newTab(destinationUrl.toString());
-    }
-    Helpers.registerToolButtons(id, init);
-})();
-
-(function () {
-    'use strict';
-
-    const id = 'purgeCache';
-    const purgePath = '/content/api/tools/purge-cache.html';
-
-    async function init(button, currentTab) {
-        const state = await BrowserUtil.getState();
-        const destinationUrl = new URL(state.domain.authorUrl + purgePath);
-        destinationUrl.searchParams.set("url", state.domain.publishUrl + Helpers.getMappedPagePath(state) + "/");
-        if (state.domain.previewUrl) {
-            destinationUrl.searchParams.append("url", state.domain.previewUrl + Helpers.getMappedPagePath(state) + "/");
-        }
-        currentTab ? BrowserUtil.updateUrl(destinationUrl.toString()) : BrowserUtil.newTab(destinationUrl.toString());
-    }
-    Helpers.registerToolButtons(id, init);
+  window.__aemToolInits = window.__aemToolInits || [];
+  window.__aemToolInits.push(function (state, tabId) {
+    const btn = document.getElementById('btn-cache-bypass');
+    if (!btn) return;
+    BrowserUtil.wireClick(btn, (alt) => {
+      BrowserUtil.navigate(tabId, HelperUtils.buildCacheBustUrl(state.currentUrl), alt);
+    });
+  });
 })();

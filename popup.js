@@ -109,6 +109,7 @@
     'btn-go-to-publish':        'Requires an AEM Author page',
     'btn-go-to-dam':            'Requires an AEM page',
     'btn-cache-bypass':         'Requires an AEM Publish page',
+    'btn-view-schema':          'Requires an AEM page',
     'btn-toggle-json':          'Requires Developer Mode and an AEM Author page',
     'btn-manage-publication':   'Requires an AEM Author page',
     'btn-toggle-client-cookie': 'Requires cookie permission',
@@ -139,6 +140,7 @@
   setEnabled('btn-go-to-publish',        isAuthor && isPage);
   setEnabled('btn-go-to-dam',            isAem);
   setEnabled('btn-cache-bypass',         isPublish && isPage);
+  setEnabled('btn-view-schema',          isPage);
   setEnabled('btn-toggle-json',          developer && isAuthor && isPage);
 
   // Middle column — Advanced

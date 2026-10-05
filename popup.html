@@ -61,6 +61,9 @@
       <button id="btn-cache-bypass"         class="tool-btn needs-page"           title="Append cache-bust param to URL">
         Cache Bypass
       </button>
+      <button id="btn-view-schema"          class="tool-btn needs-page"           title="View the page's schema JSON-LD">
+        View Schema
+      </button>
       <button id="btn-toggle-json"          class="tool-btn needs-developer needs-page" title="Toggle JCR content JSON view">
         Toggle JSON
       </button>
@@ -107,6 +110,17 @@
 
   </div><!-- /#toolbar -->
 
+  <!-- ── Schema JSON-LD panel ────────────────────────────────────────────── -->
+  <div id="schema-panel">
+    <div id="schema-header">
+      <button id="btn-schema-back" class="schema-btn" title="Back to tools">&larr; Back</button>
+      <span id="schema-summary"></span>
+      <button id="btn-schema-toggle" class="schema-btn" hidden>Expand all</button>
+      <button id="btn-schema-copy-all" class="schema-btn" hidden>Copy all</button>
+    </div>
+    <div id="schema-out"></div>
+  </div>
+
   <!-- ── No-config notice ────────────────────────────────────────────────── -->
   <div id="no-config-msg">
     <p>Configure your AEM environment to unlock all features.</p>
@@ -122,6 +136,7 @@
   <script src="src/tools/cache-buster.js"></script>
   <script src="src/tools/publish.js"></script>
   <script src="src/tools/json.js"></script>
+  <script src="src/tools/schema.js"></script>
   <script src="src/tools/toggle-client.js"></script>
   <script src="src/tools/purge-cache.js"></script>
   <script src="popup.js"></script>

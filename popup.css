@@ -275,6 +275,83 @@ body:not(.-configured) #toolbar { display: none; }
 
 #btn-open-options-msg:hover { background: #c44806; }
 
+/* ── Schema JSON-LD panel ──────────────────────────────────────────────────── */
+#schema-panel { display: none; }
+
+body.-schema-open #schema-panel   { display: block; }
+body.-schema-open #toolbar,
+body.-schema-open #no-config-msg  { display: none; }
+
+#schema-header {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding: 6px 10px;
+  border-bottom: 1px solid #d0ccc4;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+#schema-summary { flex: 1; }
+
+.schema-btn {
+  flex-shrink: 0;
+  padding: 2px 8px;
+  font: inherit;
+  font-size: 11px;
+  color: #323E48;
+  background: #fff;
+  border: 1px solid #d0ccc4;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.1s, color 0.1s;
+}
+
+.schema-btn:hover { border-color: #ED5807; color: #ED5807; }
+
+#schema-out {
+  max-height: 460px;
+  overflow-y: auto;
+  background: #fbfaf8;
+  font: 11px/1.5 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+.schema-block {
+  padding: 8px 10px;
+  border-bottom: 1px solid #e0ddd8;
+}
+
+.schema-block > h2 {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 4px;
+  font: 600 12px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+.schema-block > h2 span { flex: 1; }
+
+#schema-out details           { padding-left: 14px; }
+#schema-out .schema-block > details { padding-left: 0; }
+#schema-out summary           { cursor: pointer; }
+#schema-out .leaf             { padding-left: 28px; overflow-wrap: anywhere; }
+#schema-out .k                { color: #1a5fa0; }
+#schema-out .k.at             { color: #8c3d00; }
+#schema-out .hint             { color: #9a9590; }
+#schema-out .string           { color: #1a6e30; }
+#schema-out a.string          { text-decoration: underline; }
+#schema-out .number           { color: #c44806; }
+#schema-out .boolean,
+#schema-out .null             { color: #7a3fa0; }
+#schema-out .err              { color: #c0392b; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; }
+#schema-out pre               { margin-top: 4px; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.schema-empty {
+  padding: 14px 10px;
+  color: #6b7580;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
 /* ── Error state ───────────────────────────────────────────────────────────── */
 #error-msg {
   display: none;

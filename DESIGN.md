@@ -151,7 +151,6 @@ The popup opens when the extension icon is clicked. It renders a three-column gr
 | Go to Publish | Author, content page | None |
 | Go to DAM | Any AEM page | None |
 | Cache Bypass | Publish, content page | None |
-| View Schema | Content page | None |
 | Toggle JSON | Author, content page | Developer |
 
 **Middle column — Advanced Tools**
@@ -172,6 +171,7 @@ The popup opens when the extension icon is clicked. It renders a three-column gr
 | Cloud Manager | Any page | Developer |
 | Adobe Target | Any page | Developer |
 | Admin Console | Any page | Admin |
+| View Schema | Any web page | None |
 
 ### 5.2 Context CSS Classes
 
@@ -233,7 +233,7 @@ Each tool in `src/tools/` is an IIFE that pushes an init function onto `window._
 | Go To | `go-to.js` | Navigation functions for author ↔ publish, Adobe Cloud publish, DAM, environment quick-links, Cloud Manager (deep-links to configured program), Adobe Target, and Admin Console. |
 | Cache Buster | `cache-buster.js` | Appends or replaces a random 6-digit `cache-buster` query parameter. |
 | Manage Publication | `publish.js` | Opens the AEM Manage Publication wizard for the current content path. |
-| Schema Viewer | `schema.js` | Collects `application/ld+json` scripts from all frames of the tab via `scripting.executeScript` (deduped, since the Author editor nests the page in an iframe) and renders them inline in the popup's `#schema-panel` as a collapsible tree. |
+| Schema Viewer | `schema.js` | Collects `application/ld+json` scripts from all frames of the tab (any site; relies on `activeTab` for non-AEM hosts) via `scripting.executeScript` (deduped, since the Author editor nests the page in an iframe) and renders them inline in the popup's `#schema-panel` as a collapsible tree. |
 | JSON View | `json.js` | Toggles `/jcr:content.infinity.json` view; navigates back to the editor if already in JSON view. |
 | Toggle Client Cookie | `toggle-client.js` | Sets or removes the `pcty_audience=client` cookie, then reloads the tab. Uses `Promise.allSettled` so a single removal failure does not abort remaining cookies. |
 | Purge Cache | `purge-cache.js` | Opens the Paylocity purge-cache tool on the Author instance. On prod, passes both the live domain and `https://uat-www.paylocity.com` as targets. |

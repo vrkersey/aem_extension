@@ -3,8 +3,8 @@
 /**
  * Schema Viewer
  * Collects every <script type="application/ld+json"> block from the current
- * page (including the content frame inside the Author editor) and renders
- * them inline in the popup as a collapsible tree.
+ * page and its frames (any site; includes the content frame inside the
+ * Author editor) and renders them inline in the popup as a collapsible tree.
  */
 (function () {
   window.__aemToolInits = window.__aemToolInits || [];

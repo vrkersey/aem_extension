@@ -109,7 +109,6 @@
     'btn-go-to-publish':        'Requires an AEM Author page',
     'btn-go-to-dam':            'Requires an AEM page',
     'btn-cache-bypass':         'Requires an AEM Publish page',
-    'btn-view-schema':          'Requires an AEM page',
     'btn-toggle-json':          'Requires Developer Mode and an AEM Author page',
     'btn-manage-publication':   'Requires an AEM Author page',
     'btn-toggle-client-cookie': 'Requires cookie permission',
@@ -120,6 +119,7 @@
     'btn-cloud-manager':        'Requires Developer Mode',
     'btn-adobe-target':         'Requires Developer Mode',
     'btn-admin-console':        'Requires Admin Mode',
+    'btn-view-schema':          'Requires a web page',
   };
   const originalTitles = {};
 
@@ -140,7 +140,6 @@
   setEnabled('btn-go-to-publish',        isAuthor && isPage);
   setEnabled('btn-go-to-dam',            isAem);
   setEnabled('btn-cache-bypass',         isPublish && isPage);
-  setEnabled('btn-view-schema',          isPage);
   setEnabled('btn-toggle-json',          developer && isAuthor && isPage);
 
   // Middle column — Advanced
@@ -155,6 +154,7 @@
   setEnabled('btn-cloud-manager',        developer);
   setEnabled('btn-adobe-target',         developer);
   setEnabled('btn-admin-console',        admin);
+  setEnabled('btn-view-schema',          /^https?:/.test(state.currentUrl || ''));
 
   // ── Initialise tool modules ───────────────────────────────────────────────
   // Each tool file pushes an init function into window.__aemToolInits.

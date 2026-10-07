@@ -58,7 +58,6 @@ All buttons are always visible. A button is enabled only when its conditions are
 | Go to Publish | On Author, on a content page |
 | Go to DAM | On any AEM page |
 | Cache Bypass | On Publish, on a content page |
-| View Schema | On a content page (Author or Publish) |
 | Toggle JSON | Developer Mode enabled, on Author, on a content page |
 | Manage Publication | On Author, on a content page |
 | Client Cookie | Cookie permission is available |
@@ -67,6 +66,7 @@ All buttons are always visible. A button is enabled only when its conditions are
 | Cloud Manager | Developer Mode enabled |
 | Adobe Target | Developer Mode enabled |
 | Admin Console | Admin Mode enabled |
+| View Schema | On any web page (`http`/`https`) |
 
 ### 3.4 Navigation Behaviour
 
@@ -142,20 +142,7 @@ Appends a random cache-busting parameter to the current URL to bypass CDN and br
 
 - When clicked, then navigate to the current URL with `?cache-buster={random 6-digit number}` appended (or replaced if already present).
 
-### 4.7 View Schema
-
-**Available when:** On a content page (Author or Publish).  
-**Mode required:** None
-
-Displays the schema.org JSON-LD for the current page.
-
-- When clicked, then collect every `<script type="application/ld+json">` block from the page (including the content frame inside the Author editor) and show them inline in the popup, replacing the tool columns.
-- Each block is shown as a collapsible tree (expanded two levels deep) with its `@type` (including types inside `@graph`) in its header and a Copy button.
-- The panel header shows the block count (and invalid count), plus Expand all / Collapse all, Copy all, and a Back button that returns to the tools.
-- When a block is not valid JSON, then show the parse error alongside the raw text.
-- When the page has no JSON-LD, then the panel says so.
-
-### 4.8 Toggle JSON
+### 4.7 Toggle JSON
 
 **Available when:** On Author, on a content page.  
 **Mode required:** Developer Mode
@@ -253,6 +240,19 @@ Opens the Paylocity custom purge-cache tool on the Author instance with the rele
 **Mode required:** Admin Mode
 
 - When clicked, then navigate to `https://adminconsole.adobe.com/`.
+
+### 6.7 View Schema
+
+**Available when:** Any web page (`http`/`https`).  
+**Mode required:** None
+
+Displays the schema.org JSON-LD for the current page. Not AEM-specific — works on any site.
+
+- When clicked, then collect every `<script type="application/ld+json">` block from the page and its frames (including the content frame inside the Author editor) and show them inline in the popup, replacing the tool columns.
+- Each block is shown as a collapsible tree (expanded two levels deep) with its `@type` (including types inside `@graph`) in its header and a Copy button.
+- The panel header shows the block count (and invalid count), plus Expand all / Collapse all, Copy all, and a Back button that returns to the tools.
+- When a block is not valid JSON, then show the parse error alongside the raw text.
+- When the page has no JSON-LD, then the panel says so.
 
 ---
 

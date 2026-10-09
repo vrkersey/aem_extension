@@ -119,6 +119,7 @@
     'btn-cloud-manager':        'Requires Developer Mode',
     'btn-adobe-target':         'Requires Developer Mode',
     'btn-admin-console':        'Requires Admin Mode',
+    'btn-view-schema':          'Requires a web page',
   };
   const originalTitles = {};
 
@@ -153,6 +154,7 @@
   setEnabled('btn-cloud-manager',        developer);
   setEnabled('btn-adobe-target',         developer);
   setEnabled('btn-admin-console',        admin);
+  setEnabled('btn-view-schema',          /^https?:/.test(state.currentUrl || ''));
 
   // ── Initialise tool modules ───────────────────────────────────────────────
   // Each tool file pushes an init function into window.__aemToolInits.

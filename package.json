@@ -1,6 +1,6 @@
 {
   "name": "paylocity-aem-developer-tools",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Paylocity AEM Developer Tools browser extension",
   "scripts": {
     "build:dev": "node scripts/build.js",
